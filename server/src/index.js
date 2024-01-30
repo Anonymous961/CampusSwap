@@ -4,6 +4,7 @@ const cors=require("cors");
 const morgan=require("morgan")
 const mongoose=require("mongoose")
 const userRoutes=require("./routes/userRoutes")
+const pool=require("./sql_database/db")
 
 const app=express();
 
