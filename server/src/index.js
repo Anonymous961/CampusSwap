@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const itemRoutes = require("./routes/itemRoutes");
 const { connectSQL } = require("./sql_database/neonSeq");
 const User=require("./models/user.sql")
 
@@ -18,8 +19,9 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT | 5000;
+const PORT = process.env.MYPORT | 4000;
 
+app.use("/api/item", itemRoutes);
 app.use("/api/user", userRoutes);
 
 const startServer = async () => {
