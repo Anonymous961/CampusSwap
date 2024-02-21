@@ -1,8 +1,9 @@
 const jwt=require('jsonwebtoken');
-const User=require("../models/userModel")
+const UserMongo=require("../models/userModel")
+const User=require("../models/user.sql")
 
 const requireAuth=async(req,res,next)=>{
-    const {authorization}=req.headers;
+    const { authorization } = req.headers;
 
     if(!authorization){
         return res.status(401).json({error:"Authorization token required"});
@@ -12,7 +13,10 @@ const requireAuth=async(req,res,next)=>{
 
     try {
         const {_id}=jwt.verify(token,process.env.SECRET);
-        req.user=await User.findOne({_id}).select("_id");
+        // req.user=await User.findOne({_id}).select("_id");
+        const user=await User.findOne({where:{id:_id}});
+        // console.log(user);
+        req.user=user.dataValues;
         next();
     } catch (err) {
         console.error(err.message)
