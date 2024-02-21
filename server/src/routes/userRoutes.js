@@ -102,6 +102,12 @@ router.get("/:username",async(req,res)=>{
   }
 });
 
+//get user cart details
+router.get("/usercart",async(req,res)=>{
+  
+})
+
+
 // //update user details
 // router.patch("/:username",async);
 

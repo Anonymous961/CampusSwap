@@ -9,6 +9,11 @@ const userSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
+  cart:[
+    {
+      type: mongoose.Schema.Types.ObjectId
+    }
+  ]
 });
 
 module.exports = mongoose.model("User", userSchema);
