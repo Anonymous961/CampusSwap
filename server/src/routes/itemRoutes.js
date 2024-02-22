@@ -34,14 +34,14 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
     const {name, description, condition,price, ownerId}=req.body;
     console.log(req.file)
     const photo=req.file.filename;
+    const id=uuidv4();
+    // console.log(req.user);
 
     const newItemData={
-        itemname:name, description,price,condition, ownerId, image:photo
+        id,itemname:name, description,price,condition, ownerId, image:photo
     }
-    console.log(newItemData)
     try {
         const item= await ItemModel.create(newItemData);
-        console.log(item);
 
         //will be used after user authentication
 
@@ -50,7 +50,6 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
                 itemListId:item.id
             }
         })
-        console.log(addtouser);
 
 
         res.json(item);

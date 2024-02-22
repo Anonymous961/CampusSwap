@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: String,
   itemListId: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.UUID,
     },
   ],
   cart:[

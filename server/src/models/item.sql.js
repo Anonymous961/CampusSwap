@@ -6,6 +6,11 @@ const sequelize=new Sequelize(process.env.DATABASE_URL);
 const Item = sequelize.define(
   "Item",
   {
+    id:{
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4, // Or DataTypes.UUIDV1
+      primaryKey:true
+    },
     itemname: {
       type: DataTypes.STRING,
       allowNull: false,
