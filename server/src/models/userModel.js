@@ -11,7 +11,7 @@ const userSchema = new Schema({
   ],
   cart:[
     {
-      type: mongoose.Schema.Types.ObjectId
+      type: mongoose.Schema.Types.UUID
     }
   ]
 });

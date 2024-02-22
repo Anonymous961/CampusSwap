@@ -103,9 +103,33 @@ router.get("/:username",async(req,res)=>{
 });
 
 //get user cart details
-router.get("/usercart",async(req,res)=>{
-  
+router.get("/cart",async(req,res)=>{
+  const {username}=req.body.user;
+  try {
+    const user=await UserMongo.findOne({username:username});
+    res.json({cart:user.cart});
+  } catch (err) {
+    console.error(err.message);
+    res.status(404).json(err.message);
+  }
 })
+
+//add item to cart
+// router.post("/cart/:itemid",async (req,res)=>{
+//   const {itemId}=req.params;
+//   const {username}=req.body.user;
+//   try {
+//     const user=await UserMongo.findOneAndUpdate({username},{
+//       "$push":{
+//         cart:itemId
+//       }
+//     })
+//     res.json({message:"item successfully added",user});
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(404).json(err.message);
+//   } 
+// })
 
 
 // //update user details

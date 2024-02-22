@@ -45,6 +45,8 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
 
         //will be used after user authentication
 
+        
+        // add itemid to user data file
         const addtouser= await UserMongo.findOneAndUpdate({username:req.user.username},{
             "$push":{
                 itemListId:item.id
@@ -57,8 +59,6 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
         console.error(err.message)
         res.status(400).json({error:err.message})
     }
-
-    // add itemid to user data file
 })
 
 //delete an item
@@ -80,8 +80,35 @@ router.delete("/deleteitem/:id",async(req,res)=>{
     }
 })
 //update an item
-router.patch("/updateitem/:id",(req,res)=>{
-
+router.patch("/updateitem/:id",upload.single('photo'),(req,res)=>{
+    // const {name, description, condition,price, ownerId}=req.body;
+    // console.log(req.file)
+    // const photo=req.file.filename;
+    // const id=uuidv4();
+    // // console.log(req.user);
+    
+    // const newItemData={
+    //     id,itemname:name, description,price,condition, ownerId, image:photo
+    // }
+    // try {
+    //     const item= await ItemModel.create(newItemData);
+    
+    //     //will be used after user authentication
+    
+        
+    //     // add itemid to user data file
+    //     const addtouser= await UserMongo.findOneAndUpdate({username:req.user.username},{
+    //         "$push":{
+    //             itemListId:item.id
+    //         }
+    //     })
+    
+    
+    //     res.json(item);
+    // } catch (err) {
+    //     console.error(err.message)
+    //     res.status(400).json({error:err.message})
+    // }
 })
 
 module.exports=router;
