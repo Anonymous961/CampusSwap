@@ -3,8 +3,6 @@ const Navbar = () => {
   return (
       <div className="flex flex-row justify-between p-2 px-4 mx-8 my-5 border-b-2  border-gray-300 shadow-lg poppins-regular">
         <div className="flex flex-row items-center justify-between gap-10">
-          {/* <h1 className="text-5xl ">CampusSwap</h1>
-           */}
           <img
             src="https://i.postimg.cc/dVrQJR9g/campus-Swap-Png.png"
             width={"100px"}
