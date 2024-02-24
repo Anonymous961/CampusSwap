@@ -7,11 +7,14 @@ const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
 const { connectSQL } = require("./sql_database/neonSeq");
 const User=require("./models/user.sql")
+const path=require("path");
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+// app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static("public"));
 app.use(morgan("combined"));
 
 app.use((req, res, next) => {

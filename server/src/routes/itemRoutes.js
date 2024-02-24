@@ -12,6 +12,16 @@ const requireAuth=require("../middlewares/requireAuth");
 // auth check
 router.use(requireAuth);
 
+//get all items
+router.get("/allitems",async(req,res)=>{
+    try {
+        const items=await ItemModel.findAll();
+        res.json(items);
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json(err.message)
+    }
+})
 
 //get an item
 router.get("/:itemId",async(req,res)=>{
@@ -31,14 +41,14 @@ router.get("/:itemId",async(req,res)=>{
 
 //add an item
 router.post("/additem",upload.single('photo'),async (req,res)=>{
-    const {name, description, condition,price, ownerId}=req.body;
+    const {name, description, condition,price, ownerId,sold}=req.body;
     console.log(req.file)
     const photo=req.file.filename;
     const id=uuidv4();
     // console.log(req.user);
 
     const newItemData={
-        id,itemname:name, description,price,condition, ownerId, image:photo
+        id,itemname:name, description,price,condition, ownerId,sold, image:photo
     }
     try {
         const item= await ItemModel.create(newItemData);
