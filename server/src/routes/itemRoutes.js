@@ -10,7 +10,6 @@ const requireAuth=require("../middlewares/requireAuth");
 
 
 // auth check
-router.use(requireAuth);
 
 //get all items
 router.get("/allitems",async(req,res)=>{
@@ -22,6 +21,8 @@ router.get("/allitems",async(req,res)=>{
         res.status(500).json(err.message)
     }
 })
+
+router.use(requireAuth);
 
 //get an item
 router.get("/:itemId",async(req,res)=>{
