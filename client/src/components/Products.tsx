@@ -1,79 +1,29 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import axios from 'axios';
+import {useEffect, useState} from 'react'
+interface Item{
+  id:string,
+  itemname:string,
+  condition:string,
+  price:number,
+  sold:boolean,
+  description:string,
+  image:string
+}
 const Products = () => {
-  const data = [
-    {
-      id: 1,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 2,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: true,
-    },
-    {
-      id: 3,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 4,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 5,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 6,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 7,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 8,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: false,
-    },
-    {
-      id: 9,
-      name: "Apple",
-      price: "100",
-      img: "https://i.postimg.cc/3x1SFyB9/apple.jpg",
-      condition: "good",
-      sold: true,
-    },
-  ];
+  const [items,setItems]=useState<Item[]>([]);
+  const getItems=async()=>{
+    try {
+      const response=await axios.get(import.meta.env.VITE_APP_BACKEND_URL+`api/item/allitems`)
+      console.log(response.data)
+      setItems(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(()=>{
+    getItems();
+  },[])
   return (
     <section className="grid grid-cols-6 mx-8">
       <div className="rounded-md p-5">
@@ -82,20 +32,20 @@ const Products = () => {
       <div className="col-span-5 p-5 ">
         <h3 className="text-3xl mx-2 mb-5">All Items</h3>
         <div className="grid grid-cols-4 gap-5 m-2">
-          {data.map((item) => {
+          {items.map((item) => {
             return (
               <div
-                className="max-w-sm border-2 border-gray-300 rounded-md"
+                className="flex flex-col justify-between max-w-sm border-2 border-gray-300 rounded-md"
                 key={item.id}
               >
                 <img
                   className="rounded-t-md object-fill w-full"
-                  src={item.img}
+                  src={import.meta.env.VITE_APP_BACKEND_URL+'images/'+item.image}
                   alt=""
                 />
                 <div className="p-2">
                   <div className="flex flex-row justify-between">
-                    <h4 className="text-xl my-2">{item.name}</h4>
+                    <h4 className="text-xl my-2">{item.itemname}</h4>
                     <p className="text-xl my-2">₹{item.price}</p>
                   </div>
                   <p className="my-2">Condition: {item.condition}</p>
