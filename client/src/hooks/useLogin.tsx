@@ -18,7 +18,7 @@ export const useLogin = () => {
       localStorage.setItem("user",JSON.stringify(res.data));
       setUser(res.data);
       setLoading(false);
-    } catch (errorr) {
+    } catch (error) {
       setLoading(false);
       setError(error.response.data.message);
       console.log(error);

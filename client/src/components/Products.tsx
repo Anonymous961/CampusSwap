@@ -35,7 +35,7 @@ const Products = () => {
           {items.map((item) => {
             return (
               <div
-                className="flex flex-col justify-between max-w-sm border-2 border-gray-300 rounded-md"
+                className="flex flex-col justify-between max-w-sm border-2  rounded-md"
                 key={item.id}
               >
                 <img
@@ -50,7 +50,7 @@ const Products = () => {
                   </div>
                   <p className="my-2">Condition: {item.condition}</p>
                   <div className="flex flex-row justify-between">
-                    <button className="p-4 w-16 bg-yellow-300 rounded-md shadow-md flex justify-center items-center">
+                    <button className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center">
                       <AiOutlineShoppingCart className="" />
                     </button>
                     {item.sold ? (
@@ -58,7 +58,7 @@ const Products = () => {
                         Sold
                       </button>
                     ) : (
-                      <button className="p-4 w-24 bg-green-300 rounded-md shadow-md">
+                      <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
                         Buy now
                       </button>
                     )}
