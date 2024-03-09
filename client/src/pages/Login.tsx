@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
 import LoadingSpin from "../components/LoadingSpin";
+import Alert from "../components/Alert";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ const Login = () => {
   };
   return (
     <div className="flex flex-col justify-center items-center p-10">
+      {error && <Alert message={error} />}
       <div className=" flex flex-row border-2  rounded-md w-3/5 shadow-lg">
         <div className="flex flex-col justify-center p-10 bg-slate-800 w-1/2 poppins-regular rounded-l-lg">
           <h1 className="text-4xl text-gray-100">Discover</h1>

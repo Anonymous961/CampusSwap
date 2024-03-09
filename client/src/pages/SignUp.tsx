@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 import LoadingSpin from "../components/LoadingSpin";
+import Alert from "../components/Alert";
 
 const SignUp = () => {
   const [fname, setFname] = useState("");
@@ -14,7 +15,8 @@ const SignUp = () => {
     await signup({fname,lname,email,password});
   };
   return (
-    <div className="flex justify-center items-center p-10">
+    <div className="flex flex-col justify-center items-center p-10">
+      {error && <Alert message={error} />}
       <div className=" flex flex-row border-2 w-3/5 shadow-lg">
         <form
           className="flex flex-col justify-center items-center p-10 border-2 w-1/2 poppins-regular rounded-l-lg"
