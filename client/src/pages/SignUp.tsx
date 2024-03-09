@@ -1,25 +1,25 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from 'axios';
+import { useSignup } from "../hooks/useSignup";
+import LoadingSpin from "../components/LoadingSpin";
 
 const SignUp = () => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit=async (e)=>{
+  const {signup,error,isLoading}=useSignup();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const res= await axios.post("http://localhost:4000/api/user/signup",{firstname:fname,lastname:lname,username:email,password});
-      console.log(res.data);
-    }catch(err){
-      console.log(err)
-    }
-  }
+    await signup({fname,lname,email,password});
+  };
   return (
     <div className="flex justify-center items-center p-10">
       <div className=" flex flex-row border-2 w-3/5 shadow-lg">
-        <form className="flex flex-col justify-center items-center p-10 border-2 w-1/2 poppins-regular rounded-l-lg" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col justify-center items-center p-10 border-2 w-1/2 poppins-regular rounded-l-lg"
+          onSubmit={handleSubmit}
+        >
           <h2 className="m-8 text-4xl ">Sign Up Here</h2>
           <div className="flex flex-row w-11/12">
             <input
@@ -51,11 +51,17 @@ const SignUp = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input
-            className="border-2 border-gray-400 w-11/12 mb-4 bg-slate-900 text-white py-3 px-4"
-            type="submit"
-            value="Register"
-          />
+          {!isLoading ? (
+            <input
+              className="border-2 border-gray-400 w-11/12 my-3 mb-4 bg-slate-800 text-white py-3 px-4"
+              type="submit"
+              value="Register"
+            />
+          ) : (
+            <button className="border-2 border-gray-400 w-11/12 my-3 mb-4 bg-slate-800 text-white py-3 px-4">
+              <LoadingSpin />
+            </button>
+          )}
           <p>
             New user?
             <Link to="/login" className="underline text-blue-400">

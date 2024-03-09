@@ -1,8 +1,11 @@
 import { FaCartPlus, FaUser } from "react-icons/fa";
 import { Link,useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { UserAtom } from "../store/atoms/user";
 
 const Navbar = () => {
   const navigate=useNavigate();
+  const User=useRecoilValue(UserAtom);
   return (
     <div className="flex flex-row justify-between p-2 px-4 mx-8 my-5 border-b-2  border-gray-300 shadow-lg poppins-regular">
       <div className="flex flex-row items-center justify-between gap-10">
@@ -22,7 +25,7 @@ const Navbar = () => {
       </div>
       <div className="flex justify-items-end items-center gap-10">
         <FaCartPlus className="text-4xl" />
-        <Link to="/login">
+        <Link to={User?"/profile":"/login"}>
           <FaUser className="text-4xl" />
         </Link>
       </div>
