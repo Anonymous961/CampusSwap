@@ -43,7 +43,7 @@ router.post("/signup", async (req, res) => {
     res.json({ user, userMongo, token });
   } catch (err) {
     console.error(err.message);
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
     res.json({ username: user.username, token });
   } catch (err) {
     console.error(err.message);
-    res.status(400).json(err.message);
+    res.status(400).json({message:err.message});
   }
 });
 
