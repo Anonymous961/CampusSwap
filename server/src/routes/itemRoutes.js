@@ -18,14 +18,14 @@ router.get("/allitems",async(req,res)=>{
         res.json(items);
     } catch (err) {
         console.error(err.message)
-        res.status(500).json(err.message)
+        res.status(500).json({message:err.message})
     }
 })
 
 router.use(requireAuth);
 
 //get an item
-router.get("/:itemId",async(req,res)=>{
+router.get("/allitems/:itemId",async(req,res)=>{
     const {itemId}=req.params;
     try {
         const response= await ItemModel.findOne({where:{id:itemId}});
@@ -36,13 +36,15 @@ router.get("/:itemId",async(req,res)=>{
         res.json(response);
     } catch (err) {
         console.error(err.message)
-        res.status(400).json({error:err.message})
+        res.status(400).json({message:err.message})
     }
 })
 
 //add an item
 router.post("/additem",upload.single('photo'),async (req,res)=>{
-    const {name, description, condition,price, ownerId,sold}=req.body;
+    // const {ownerId}=req.headers;
+    const {name, description, condition,ownerId,price,sold}=req.body;
+    console.log("ownnerid:"+ownerId);
     console.log(req.file)
     const photo=req.file.filename;
     const id=uuidv4();
@@ -51,6 +53,7 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
     const newItemData={
         id,itemname:name, description,price,condition, ownerId,sold, image:photo
     }
+    console.log(newItemData);
     try {
         const item= await ItemModel.create(newItemData);
 
@@ -68,7 +71,7 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
         res.json(item);
     } catch (err) {
         console.error(err.message)
-        res.status(400).json({error:err.message})
+        res.status(400).json({message:err.message})
     }
 })
 
@@ -87,9 +90,24 @@ router.delete("/deleteitem/:id",async(req,res)=>{
         res.json("Item deleted successfully!!");
     } catch (err) {
         console.error(err.message)
-        res.status(400).json({error:err.message})
+        res.status(400).json({message:err.message})
     }
 })
+
+//get all user item
+router.get("/userItem",async(req,res)=>{
+    const {username}=req.headers;
+    try {
+        const user=await UserMongo.findOne({username});
+        const useridstring=user.id;
+        const itemList= await ItemModel.findAll({where:{ownerId:useridstring}});
+        res.json({itemList});
+    } catch (err) {
+        console.error(err.message)
+        res.status(400).json({message:err.message})
+    }
+})
+
 //update an item
 router.patch("/updateitem/:id",upload.single('photo'),(req,res)=>{
     // const {name, description, condition,price, ownerId}=req.body;
