@@ -1,29 +1,36 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import axios from 'axios';
-import {useEffect, useState} from 'react'
-interface Item{
-  id:string,
-  itemname:string,
-  condition:string,
-  price:number,
-  sold:boolean,
-  description:string,
-  image:string
+import axios from "axios";
+import { useEffect, useState } from "react";
+import LoadingSpin from "./LoadingSpin";
+interface Item {
+  id: string;
+  itemname: string;
+  condition: string;
+  price: number;
+  sold: boolean;
+  description: string;
+  image: string;
 }
 const Products = () => {
-  const [items,setItems]=useState<Item[]>([]);
-  const getItems=async()=>{
+  const [items, setItems] = useState<Item[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const getItems = async () => {
     try {
-      const response=await axios.get(import.meta.env.VITE_APP_BACKEND_URL+`api/item/allitems`)
-      console.log(response.data)
+      setIsLoading(true);
+      const response = await axios.get(
+        import.meta.env.VITE_APP_BACKEND_URL + `api/item/allitems`
+      );
+      console.log(response.data);
       setItems(response.data);
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       console.log(err);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getItems();
-  },[])
+  }, []);
   return (
     <section className="grid grid-cols-6 mx-8">
       <div className="rounded-md p-5">
@@ -31,6 +38,9 @@ const Products = () => {
       </div>
       <div className="col-span-5 p-5 ">
         <h3 className="text-3xl mx-2 mb-5">All Items</h3>
+        <span className="flex justify-center">
+          {isLoading && <LoadingSpin />}
+        </span>
         <div className="grid grid-cols-4 gap-5 m-2">
           {items.map((item) => {
             return (
@@ -40,7 +50,11 @@ const Products = () => {
               >
                 <img
                   className="rounded-t-md object-fill w-full"
-                  src={import.meta.env.VITE_APP_BACKEND_URL+'images/'+item.image}
+                  src={
+                    import.meta.env.VITE_APP_BACKEND_URL +
+                    "images/" +
+                    item.image
+                  }
                   alt=""
                 />
                 <div className="p-2">
