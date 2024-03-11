@@ -4,12 +4,14 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
 import LoadingSpin from "../components/LoadingSpin";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { logout } = useLogout();
   const [isLoading, setIsLoading] = useState(false);
   const [itemList, setItemList] = useState([]);
   const user = useRecoilValue(UserAtom);
+  const navigate=useNavigate();
   const getUserItems = async () => {
     try {
       setIsLoading(true);
@@ -41,7 +43,12 @@ const Profile = () => {
           <h2 className="text-3xl">User Details</h2>
         </div>
         <div>
-          <h2 className="text-3xl">User Items</h2>
+          <div className="flex justify-between">
+            <h2 className="text-3xl">User Items</h2>
+            <button className="p-2 text-white bg-green-600 hover:bg-green-500 rounded-md" onClick={()=>navigate("/additem")}>
+              Add Item
+            </button>
+          </div>
           <span className="flex justify-center">
             {isLoading && <LoadingSpin />}
           </span>
