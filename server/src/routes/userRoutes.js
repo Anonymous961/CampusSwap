@@ -98,7 +98,7 @@ router.get("/:username",async(req,res)=>{
     res.json({user, userMongo})
   } catch (err) {
     console.error(err.message);
-    res.status(400).json(err.message);
+    res.status(400).json({message:err.message});
   }
 });
 

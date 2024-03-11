@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUp";
 import { UserAtom } from "./store/atoms/user";
 import { useRecoilValue } from "recoil";
 import Profile from "./pages/Profile";
+import AddItem from "./pages/AddItem";
 
 function App() {
   const user = useRecoilValue(UserAtom);
@@ -28,6 +29,10 @@ function App() {
         <Route
           path="/profile"
           element={user ? <Profile /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/addItem"
+          element={user ? <AddItem /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />

@@ -52,7 +52,7 @@ const Profile = () => {
           <span className="flex justify-center">
             {isLoading && <LoadingSpin />}
           </span>
-          <div className="grid grid-cols-4 gap-5 m-2">
+          <div className="grid grid-cols-5 gap-5 m-2">
             {itemList.map((item) => {
               return (
                 <div
