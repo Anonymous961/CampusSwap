@@ -61,7 +61,7 @@ router.post("/additem",upload.single('photo'),async (req,res)=>{
 
         
         // add itemid to user data file
-        const addtouser= await UserMongo.findOneAndUpdate({username:req.user.username},{
+        const addtouser= await UserMongo.findOneAndUpdate({_id:ownerId},{
             "$push":{
                 itemListId:item.id
             }
