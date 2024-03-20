@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
 import LoadingSpin from "../components/LoadingSpin";
 import { useNavigate } from "react-router-dom";
+import ToggleButton from "../components/ToggleButton";
 
 const Profile = () => {
   const { logout } = useLogout();
@@ -74,17 +75,15 @@ const Profile = () => {
                       <p className="text-xl my-2">₹{item.price}</p>
                     </div>
                     <p className="my-2">Condition: {item.condition}</p>
-                    <div className="flex flex-row justify-between">
+                    {/* <div className="flex flex-row "> */}
                       {item.sold ? (
                         <button className="p-4 w-24 bg-gray-300 rounded-md shadow-md">
                           Resell
                         </button>
                       ) : (
-                        <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
-                          Mark As Sold
-                        </button>
+                        <ToggleButton/>
                       )}
-                    </div>
+                    {/* </div> */}
                   </div>
                 </div>
               );

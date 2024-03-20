@@ -9,7 +9,6 @@ let upload=multer({storage,fileFilter});
 const requireAuth=require("../middlewares/requireAuth");
 
 
-// auth check
 
 //get all items
 router.get("/allitems",async(req,res)=>{
@@ -22,14 +21,13 @@ router.get("/allitems",async(req,res)=>{
     }
 })
 
-router.use(requireAuth);
 
-//get an item
+//get an item by id
 router.get("/allitems/:itemId",async(req,res)=>{
     const {itemId}=req.params;
     try {
         const response= await ItemModel.findOne({where:{id:itemId}});
-        console.log(response);
+        // console.log(response);
         if(!response){
             throw Error("Item does not exist!!");
         }
@@ -39,6 +37,25 @@ router.get("/allitems/:itemId",async(req,res)=>{
         res.status(400).json({message:err.message})
     }
 })
+
+//get an item by name
+router.get("/itemname/:itemname",async(req,res)=>{
+    const {itemname}=req.params;
+    try {
+        const response= await ItemModel.findAll({where:{itemname:itemname}});
+        // console.log(response);
+        if(!response){
+            throw Error("Item does not exist!!");
+        }
+        res.json(response);
+    } catch (err) {
+        console.error(err.message)
+        res.status(400).json({message:err.message})
+    }
+})
+
+// auth check
+router.use(requireAuth);
 
 //add an item
 router.post("/additem",upload.single('photo'),async (req,res)=>{
