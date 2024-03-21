@@ -7,6 +7,7 @@ const multer=require('multer');
 const UserMongo=require("../models/userModel");
 let upload=multer({storage,fileFilter});
 const requireAuth=require("../middlewares/requireAuth");
+const getUserId=require("../utils/getUserId")
 
 
 
@@ -60,8 +61,11 @@ router.use(requireAuth);
 //add an item
 router.post("/additem",upload.single('photo'),async (req,res)=>{
     // const {ownerId}=req.headers;
-    const {name, description, condition,ownerId,price,sold}=req.body;
-    console.log("ownnerid:"+ownerId);
+    const {name, description, condition,price,sold}=req.body;
+    const {authorization}=req.headers;
+    // const token=authorization.split(" ")[1];
+    const ownerId=getUserId(authorization);
+    // console.log("ownnerid:"+ownerId);
     console.log(req.file)
     const photo=req.file.filename;
     const id=uuidv4();
@@ -113,11 +117,13 @@ router.delete("/deleteitem/:id",async(req,res)=>{
 
 //get all user item
 router.get("/userItem",async(req,res)=>{
-    const {username}=req.headers;
+    // const {username}=req.headers;
     try {
-        const user=await UserMongo.findOne({username});
-        const useridstring=user.id;
-        const itemList= await ItemModel.findAll({where:{ownerId:useridstring}});
+        // const user=await UserMongo.findOne({username});
+        // const useridstring=user.id;
+        const {authorization}=req.headers;
+        const ownerId=getUserId(authorization);
+        const itemList= await ItemModel.findAll({where:{ownerId}});
         res.json({itemList});
     } catch (err) {
         console.error(err.message)

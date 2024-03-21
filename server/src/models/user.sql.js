@@ -3,9 +3,8 @@ const {sequelize}=require("../sql_database/neonSeq");
 
 const User=sequelize.define('User',{
     id:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.STRING,
         primaryKey:true,
-        autoIncrement:true
     },
     firstName:{
         type:DataTypes.STRING,

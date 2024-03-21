@@ -32,15 +32,16 @@ router.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
+    const userMongo = await UserMongo.create({ username });
     const user = await User.create({
+      id:userMongo.id,
       username,
       firstName: firstname,
       lastName: lastname,
       password: hash,
     });
-    const userMongo = await UserMongo.create({ username });
     const token = createToken(user.id, username);
-    res.json({ user, userMongo, token });
+    res.json({ user, token });
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ message: err.message });

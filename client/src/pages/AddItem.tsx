@@ -6,6 +6,7 @@ import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
 import InfoBanner from "../components/InfoBanner";
 
+
 const AddItem = () => {
   const user = useRecoilValue(UserAtom);
   const [itemname, setItemname] = useState("");
@@ -19,21 +20,21 @@ const AddItem = () => {
   const [successData,setSuccessData]=useState(null);
   const navigate=useNavigate();
   const options = ["Best","Good", "Fine", "Bad"];
-  const getownerId = async () => {
-    try {
-      if (user != null) {
-        const res = await axios.get(
-          import.meta.env.VITE_APP_BACKEND_URL + "api/user/" + user.username
-        );
-        setOwnerId(res.data.userMongo._id);
-      } else {
-        throw new Error("Token is null");
-      }
-    } catch (err) {
-      console.error(err.response.data);
-      setError(err.response.data.message);
-    }
-  };
+  // const getownerId = async () => {
+  //   try {
+  //     if (user != null) {
+  //       const res = await axios.get(
+  //         import.meta.env.VITE_APP_BACKEND_URL + "api/user/" + user.username
+  //       );
+  //       setOwnerId(res.data.userMongo._id);
+  //     } else {
+  //       throw new Error("Token is null");
+  //     }
+  //   } catch (err) {
+  //     console.error(err.response.data);
+  //     setError(err.response.data.message);
+  //   }
+  // };
   const handlePhoto = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -43,6 +44,11 @@ const AddItem = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // const {_id}=decode(user.token);
+    // console.log(decode(user.token));
+    // console.log("userid",_id);
+    // console.log("helllo")
     const formData = new FormData();
     formData.append("photo", file);
     formData.append("name", itemname);
@@ -50,9 +56,9 @@ const AddItem = () => {
     formData.append("price", price);
     formData.append("condition", condition);
     formData.append("sold", "false");
-    formData.append("ownerId", ownerId);
+    // formData.append("ownerId", ownerId);
     // console.log(formData);
-    console.log({ file, itemname, description, price, condition, ownerId });
+    console.log({ file, itemname, description, price, condition});
     try {
       const res = await axios.post(
         import.meta.env.VITE_APP_BACKEND_URL + "api/item/additem",
@@ -74,9 +80,9 @@ const AddItem = () => {
       setError(err.response.data.error);
     }
   };
-  useEffect(() => {
-    getownerId();
-  }, []);
+  // useEffect(() => {
+  //   getownerId();
+  // }, []);
   return (
     <section className="flex flex-col justify-center p-5">
       {error && <Alert message={error} />}
