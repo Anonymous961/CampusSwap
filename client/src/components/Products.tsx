@@ -3,25 +3,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpin from "./LoadingSpin";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-interface Item {
-  id: string;
-  itemname: string;
-  condition: string;
-  price: number;
-  sold: boolean;
-  description: string;
-  image: string;
-}
+import { useRecoilState } from "recoil";
+import { CartAtom } from "../store/atoms/cart";
+import { Item } from "../store/dataTypes";
+
 const Products = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [cart, setCart] = useRecoilState(CartAtom);
   const getItems = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
         import.meta.env.VITE_APP_BACKEND_URL + `api/item/allitems`
       );
-      console.log(response.data);
       setItems(response.data);
       setIsLoading(false);
     } catch (err) {
@@ -29,20 +24,41 @@ const Products = () => {
       console.log(err);
     }
   };
-  function getClassForCondition(condition:string) {
-    switch(condition.toLowerCase()) {
-      case 'best':
-        return 'text-blue-500'; // Blue color for 'best'
-      case 'good':
-        return 'text-green-500'; // Green color for 'good'
-      case 'bad':
-        return 'text-yellow-500'; // Yellow color for 'bad'
-      case 'worst':
-        return 'text-red-500'; // Red color for 'worst'
+  function getClassForCondition(condition: string) {
+    switch (condition.toLowerCase()) {
+      case "best":
+        return "text-blue-500"; // Blue color for 'best'
+      case "good":
+        return "text-green-500"; // Green color for 'good'
+      case "bad":
+        return "text-yellow-500"; // Yellow color for 'bad'
+      case "worst":
+        return "text-red-500"; // Red color for 'worst'
       default:
-        return ''; // Default color
+        return ""; // Default color
     }
   }
+  const handleCart = (item: Item) => {
+    const existingItemIndex = cart.findIndex(
+      (cartItem: Item) => cartItem.id === item.id
+    );
+
+    if (existingItemIndex !== -1) {
+      setCart(prevCart=>{
+        const updatedCart=prevCart.map((cartItem,index)=>{
+          if(index===existingItemIndex){
+            return {...cartItem,quantity:cartItem.quantity+1};
+          }
+          return cartItem;
+        })
+        return updatedCart;
+      });
+    } else {
+      // Item doesn't exist in the cart, add it with quantity 1
+      const newItem: Item = { ...item, quantity: 1 };
+      setCart([...cart, newItem]);
+    }
+  };
   useEffect(() => {
     getItems();
   }, []);
@@ -75,10 +91,12 @@ const Products = () => {
                 <div className="p-2">
                   <div className="flex flex-row justify-between">
                     <h4 className="text-2xl my-2 ">{item.itemname}</h4>
-                    <p className="text-xl my-2 text-orange-700">₹{item.price}</p>
+                    <p className="text-xl my-2 text-orange-700">
+                      ₹{item.price}
+                    </p>
                   </div>
                   <p className="my-2 font-medium">
-                    Condition : 
+                    Condition :
                     <span className={getClassForCondition(item.condition)}>
                       {item.condition}
                     </span>
@@ -89,7 +107,10 @@ const Products = () => {
                     })}
                   </p>
                   <div className="flex flex-row justify-between">
-                    <button className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center">
+                    <button
+                      className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center"
+                      onClick={() => handleCart(item)}
+                    >
                       <AiOutlineShoppingCart className="" />
                     </button>
                     {item.sold ? (
@@ -98,7 +119,7 @@ const Products = () => {
                       </button>
                     ) : (
                       <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
-                        Buy now
+                        Contact Owner
                       </button>
                     )}
                   </div>

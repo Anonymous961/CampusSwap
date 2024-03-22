@@ -13,6 +13,7 @@ import { UserAtom } from "./store/atoms/user";
 import { useRecoilValue } from "recoil";
 import Profile from "./pages/Profile";
 import AddItem from "./pages/AddItem";
+import Cart from "./pages/Cart";
 
 function App() {
   const user = useRecoilValue(UserAtom);
@@ -33,6 +34,10 @@ function App() {
         <Route
           path="/addItem"
           element={user ? <AddItem /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/cart"
+          element={user ? <Cart /> : <Navigate to="/" />}
         />
       </Routes>
       <Footer />
