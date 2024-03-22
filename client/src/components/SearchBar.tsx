@@ -6,12 +6,10 @@ const SearchBar = ({setResults}) => {
   const fetchData = (value:string) => {
     axios.get(import.meta.env.VITE_APP_BACKEND_URL+`api/item/allitems`)
     .then((res)=>{
-        // console.log(res.data);
         const newValue=value.toLowerCase();
         const results=res.data.filter((item)=>{
             return item && item.itemname && item.itemname.toLowerCase().includes(newValue);
         })
-        // console.log(results);
         setResults(results);
     })
   };

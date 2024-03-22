@@ -22,7 +22,6 @@ export const useSignup = () => {
         import.meta.env.VITE_APP_BACKEND_URL + "api/user/signup",
         { firstname: fname, lastname: lname, username: email, password }
       );
-    //   console.log(res.data);
       localStorage.setItem("user",JSON.stringify(res.data));
       setUser(res.data);
       setLoading(false);

@@ -5,6 +5,7 @@ const validator = require("validator");
 const User = require("../models/user.sql");
 const UserMongo = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const getUserId = require("../utils/getUserId");
 
 //signup user
 function createToken(_id, username) {
@@ -34,7 +35,7 @@ router.post("/signup", async (req, res) => {
 
     const userMongo = await UserMongo.create({ username });
     const user = await User.create({
-      id:userMongo.id,
+      id: userMongo.id,
       username,
       firstName: firstname,
       lastName: lastname,
@@ -71,18 +72,20 @@ router.post("/login", async (req, res) => {
     res.json({ username: user.username, token });
   } catch (err) {
     console.error(err.message);
-    res.status(400).json({message:err.message});
+    res.status(400).json({ message: err.message });
   }
 });
 
 // //delete user
-router.delete("/:username", async(req, res) => {
-  const {username}=req.params;
+router.delete("/:username", async (req, res) => {
+  const { username } = req.params;
   try {
-    const response= await User.destroy({
-      where:{username}
-    })
-    const deleteFromMongo= await UserMongo.findOneAndDelete({username:username})
+    const response = await User.destroy({
+      where: { username },
+    });
+    const deleteFromMongo = await UserMongo.findOneAndDelete({
+      username: username,
+    });
     res.json("User deleted successfully");
   } catch (err) {
     console.error(err.message);
@@ -90,50 +93,37 @@ router.delete("/:username", async(req, res) => {
   }
 });
 
-//get user details
-router.get("/:username",async(req,res)=>{
-  const {username}=req.params;
-  try {
-    const user=await User.findOne({where:{username}});
-    const userMongo= await UserMongo.findOne({username});
-    res.json({user, userMongo})
-  } catch (err) {
-    console.error(err.message);
-    res.status(400).json({message:err.message});
-  }
-});
 
 //get user cart details
-router.get("/cart",async(req,res)=>{
-  const {username}=req.body.user;
+router.get("/cart", async (req, res) => {
+  const { authorization } = req.headers;
+  const ownerId = getUserId(authorization);
   try {
-    const user=await UserMongo.findOne({username:username});
-    res.json({cart:user.cart});
+    const user = await UserMongo.findOne({ _id: ownerId});
+    res.json({ cart: user.cart });
   } catch (err) {
     console.error(err.message);
     res.status(404).json(err.message);
   }
-})
+});
 
-//add item to cart
-// router.post("/cart/:itemid",async (req,res)=>{
-//   const {itemId}=req.params;
-//   const {username}=req.body.user;
-//   try {
-//     const user=await UserMongo.findOneAndUpdate({username},{
-//       "$push":{
-//         cart:itemId
-//       }
-//     })
-//     res.json({message:"item successfully added",user});
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(404).json(err.message);
-//   } 
-// })
-
-
-// //update user details
-// router.patch("/:username",async);
+//update cart
+router.post("/cart", async (req, res) => {
+  const { authorization } = req.headers;
+  const ownerId = getUserId(authorization);
+  const { cart } = req.body;
+  try {
+    // console.log(cart);
+    console.dir(cart, { depth: null });
+    const response = await UserMongo.findOneAndUpdate({ _id: ownerId }, { cart },{new:true});
+    if (!response) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ message: "Cart Updated", res });
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).json({ message: err.message });
+  }
+});
 
 module.exports = router;

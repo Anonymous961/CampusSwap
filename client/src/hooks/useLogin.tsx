@@ -14,7 +14,6 @@ export const useLogin = () => {
         username: email,
         password,
       });
-    //   console.log(res.data);
       localStorage.setItem("user",JSON.stringify(res.data));
       setUser(res.data);
       setLoading(false);

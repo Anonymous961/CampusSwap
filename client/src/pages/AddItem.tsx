@@ -25,7 +25,6 @@ const AddItem = () => {
     const file = e.target.files[0];
     setFile(file);
     setImage(window.URL.createObjectURL(file));
-    // console.log(file);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +36,6 @@ const AddItem = () => {
     formData.append("price", price);
     formData.append("condition", condition);
     formData.append("sold", "false");
-    console.log({ file, itemname, description, price, condition });
     try {
       const res = await axios.post(
         import.meta.env.VITE_APP_BACKEND_URL + "api/item/additem",
