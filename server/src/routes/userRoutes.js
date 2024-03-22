@@ -42,7 +42,10 @@ router.post("/signup", async (req, res) => {
       password: hash,
     });
     const token = createToken(user.id, username);
-    res.json({ user, token });
+    const newUser=Object.fromEntries(
+      Object.entries(user.dataValues).filter(([key,value])=>key!=='password')
+    );
+    res.json({ user:newUser, token });
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ message: err.message });
@@ -69,7 +72,10 @@ router.post("/login", async (req, res) => {
     }
     const token = createToken(user.id, username);
     // res.json({ user, userMongo,token });
-    res.json({ username: user.username, token });
+    const newUser=Object.fromEntries(
+      Object.entries(user.dataValues).filter(([key,value])=>key!=='password')
+    );
+    res.json({ user:newUser, token });
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ message: err.message });

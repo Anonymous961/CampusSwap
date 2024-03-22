@@ -3,14 +3,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpin from "./LoadingSpin";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
 import { Item } from "../store/dataTypes";
+import { useNavigate } from "react-router-dom";
+import { UserAtom } from "../store/atoms/user";
 
 const Products = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useRecoilState(CartAtom);
+  const user = useRecoilValue(UserAtom);
+  const navigate = useNavigate();
   const getItems = async () => {
     try {
       setIsLoading(true);
@@ -44,13 +48,13 @@ const Products = () => {
     );
 
     if (existingItemIndex !== -1) {
-      setCart(prevCart=>{
-        const updatedCart=prevCart.map((cartItem,index)=>{
-          if(index===existingItemIndex){
-            return {...cartItem,quantity:cartItem.quantity+1};
+      setCart((prevCart) => {
+        const updatedCart = prevCart.map((cartItem, index) => {
+          if (index === existingItemIndex) {
+            return { ...cartItem, quantity: cartItem.quantity + 1 };
           }
           return cartItem;
-        })
+        });
         return updatedCart;
       });
     } else {
@@ -109,7 +113,13 @@ const Products = () => {
                   <div className="flex flex-row justify-between">
                     <button
                       className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center"
-                      onClick={() => handleCart(item)}
+                      onClick={() => {
+                        if (user) {
+                          handleCart(item);
+                        } else {
+                          navigate("/login");
+                        }
+                      }}
                     >
                       <AiOutlineShoppingCart className="" />
                     </button>

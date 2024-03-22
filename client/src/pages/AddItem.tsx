@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";

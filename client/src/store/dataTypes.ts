@@ -11,3 +11,7 @@ export interface Item {
     createdAt:Date;
     quantity:number
 }
+export interface User{
+    username:string;
+    token:string;
+}

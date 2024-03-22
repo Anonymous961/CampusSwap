@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import axios from 'axios'
+import { Item } from "../store/dataTypes";
 const SearchBar = ({setResults}) => {
   const [input, setInput] = useState("");
   const fetchData = (value:string) => {
     axios.get(import.meta.env.VITE_APP_BACKEND_URL+`api/item/allitems`)
     .then((res)=>{
         const newValue=value.toLowerCase();
-        const results=res.data.filter((item)=>{
+        const results=res.data.filter((item:Item)=>{
             return item && item.itemname && item.itemname.toLowerCase().includes(newValue);
         })
         setResults(results);
