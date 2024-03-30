@@ -19,8 +19,15 @@ const Navbar = () => {
           <Link to="/">
             <li className="p-2 text-xl hover:underline">Home</li>
           </Link>
-          <li className="p-2 text-xl hover:underline">Contact</li>
+          <Link to="/contact">
+            <li className="p-2 text-xl hover:underline">Contact</li>
+          </Link>
           <li className="p-2 text-xl hover:underline">About</li>
+          {User && (
+            <Link to="/chats">
+              <li className="p-2 text-xl hover:underline">Chats</li>
+            </Link>
+          )}
         </ul>
       </div>
       <div className="flex justify-items-end items-center gap-10">

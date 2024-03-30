@@ -7,6 +7,7 @@ import axios from "axios";
 import { CartAtom } from "../store/atoms/cart";
 
 const Home = () => {
+  
   const setCart = useSetRecoilState(CartAtom);
   const setUser = useSetRecoilState(UserAtom);
   useEffect(() => {
@@ -24,18 +25,19 @@ const Home = () => {
                   authorization: "Bearer " + user.token,
                 },
               }
-            );
-            setCart(res.data.cart);
+              );
+              setCart(res.data.cart);
+            }
           }
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      };
+      
+      fetchData();
+    }, [setCart, setUser]);
 
-    fetchData();
-  }, [setCart, setUser]);
-  return (
+    return (
     <div>
       <div className="flex flex-row justify-around items-center p-5  mx-8">
         <div className="poppins-regular">

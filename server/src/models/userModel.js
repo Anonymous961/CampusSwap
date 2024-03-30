@@ -16,6 +16,34 @@ const cartItemSchema = new Schema({
   updatedAt: Date
 });
 
+const messageSchema=new Schema({
+  sender:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+    required:true
+  },
+  content:{
+    type:String,
+    required:true
+  },
+  timestamp:{
+    type:Date,
+    default:Date.now
+  },
+  roomId:{
+    type:String,
+    required:true
+  }
+})
+
+const chatSchema=new Schema({
+  participants:[{
+    type:Schema.Types.ObjectId,
+    ref:"User"
+  }],
+  messages:[messageSchema]
+})
+
 const userSchema = new Schema({
   username: String,
   itemListId: [
@@ -23,7 +51,18 @@ const userSchema = new Schema({
       type: mongoose.Schema.Types.UUID,
     },
   ],
-  cart:[cartItemSchema]
+  cart:[cartItemSchema],
+  online:{
+    type:Boolean,
+    default:false
+  },
+  chatRooms:[{
+    type:String
+  }]
 });
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
+const Message = mongoose.model('Message', messageSchema);
+const Chat= mongoose.model('Chat',chatSchema)
+module.exports = {User,Message,Chat};
+

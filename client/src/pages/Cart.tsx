@@ -1,15 +1,27 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect,  useState } from "react";
 import { Item } from "../store/dataTypes";
 import { UserAtom } from "../store/atoms/user";
 import { updateCart } from "../utils/updateCart";
+// import {io} from "socket.io-client"
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useRecoilState(CartAtom);
+  // const socket = useMemo(() => io("http://localhost:4000"), []);
   const user = useRecoilValue(UserAtom);
+  const navigate=useNavigate()
   const [totalAmount, setTotalAmount] = useState<number>(0);
+  // console.log(cart)
+  // console.log(user);
+  const handleContact=(item:Item)=>{
+    const buyerId=user.user.id;
+    const sellerId=item.ownerId;
+    // socket.emit('joinRoom', { buyerId, sellerId });
+    navigate(`/chats/${buyerId}_${sellerId}`);
+  }
   const getTotalAmount = () => {
     let t = 0;
     cart.map((item: Item) => {
@@ -79,7 +91,7 @@ const Cart = () => {
                 </button>
               </div>
               <p className="text-xl text-orange-700"> Rs.{item.price}</p>
-              <button className="border-2 p-2 bg-gray-950 text-white hover:text-yellow-300 rounded-md ">
+              <button className="border-2 p-2 bg-gray-950 text-white hover:text-yellow-300 rounded-md " onClick={()=>handleContact(item)}>
                 Contact Owner
               </button>
               <div className="flex justify-center">

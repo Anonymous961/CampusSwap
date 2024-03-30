@@ -9,7 +9,8 @@ export interface Item {
     description: string;
     image: string;
     createdAt:Date;
-    quantity:number
+    quantity:number;
+    ownerId:string;
 }
 export interface User{
     username:string;

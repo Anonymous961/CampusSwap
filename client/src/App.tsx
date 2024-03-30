@@ -14,6 +14,9 @@ import { useRecoilValue } from "recoil";
 import Profile from "./pages/Profile";
 import AddItem from "./pages/AddItem";
 import Cart from "./pages/Cart";
+import Chats from "./pages/Chats";
+import Contact from "./pages/Contact";
+import ItemPage from "./pages/ItemPage";
 
 function App() {
   const user = useRecoilValue(UserAtom);
@@ -38,6 +41,22 @@ function App() {
         <Route
           path="/cart"
           element={user ? <Cart /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/chats"
+          element={user ? <Chats /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/chats/:roomId"
+          element={user ? <Chats /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact/>}
+        />
+        <Route
+          path="/item/:id"
+          element={<ItemPage/>}
         />
       </Routes>
       <Footer />

@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const User = require("../models/user.sql");
-const UserMongo = require("../models/userModel");
+const {User:UserMongo} = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const getUserId = require("../utils/getUserId");
 
@@ -131,5 +131,20 @@ router.post("/cart", async (req, res) => {
     res.status(401).json({ message: err.message });
   }
 });
+
+
+router.get("/chats",async(req,res)=>{
+  const { authorization } = req.headers;
+  const ownerId = getUserId(authorization);
+  // console.log(ownerId);
+  try{
+    const user=await UserMongo.findOne({_id:ownerId});
+    const chatRooms=user.chatRooms;
+    res.json({chatRooms});
+  }catch(error){
+    console.error(error.message);
+    res.status(401).json({message:error.message})
+  }
+})
 
 module.exports = router;
