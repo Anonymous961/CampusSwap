@@ -14,7 +14,7 @@ const connectSQL=async()=>{
 
         //Syncing User and Item model with the database
         // await User.sync({alter:true});
-        // await Item.sync({alter:true});
+        await Item.sync({alter:true});
         console.log("User and Items tables created!")
       } catch (error) {
         console.error('Unable to connect to the database:', error);

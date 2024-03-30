@@ -13,8 +13,8 @@ function createToken(_id, username) {
 }
 
 router.post("/signup", async (req, res) => {
-  const { username, firstname, lastname, password } = req.body;
-  if (!username || !password || !firstname || !lastname) {
+  const { username, firstname, lastname, password ,city } = req.body;
+  if (!username || !password || !firstname || !lastname || !city) {
     return res.status(400).json("All fields required!");
   }
   try {
@@ -40,6 +40,7 @@ router.post("/signup", async (req, res) => {
       firstName: firstname,
       lastName: lastname,
       password: hash,
+      city
     });
     const token = createToken(user.id, username);
     const newUser=Object.fromEntries(

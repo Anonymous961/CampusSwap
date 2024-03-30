@@ -35,7 +35,7 @@ app.use("/api/user", userRoutes);
 const startServer = async () => {
   try {
     await connectSQL(); // Connect to SQL database
-    // await User.sync({ alter: true }); // Synchronize User table
+    await User.sync({ alter: true }); // Synchronize User table
     console.log("user table sync")
 
     await mongoose.connect(process.env.MONGO_URI);

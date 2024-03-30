@@ -36,6 +36,7 @@ const AddItem = () => {
     formData.append("price", price);
     formData.append("condition", condition);
     formData.append("sold", "false");
+    formData.append("ownerName",user.user.username)
     try {
       const res = await axios.post(
         import.meta.env.VITE_APP_BACKEND_URL + "api/item/additem",

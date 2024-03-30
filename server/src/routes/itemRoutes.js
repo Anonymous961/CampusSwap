@@ -55,7 +55,7 @@ router.use(requireAuth);
 
 //add an item
 router.post("/additem", upload.single("photo"), async (req, res) => {
-  const { name, description, condition, price, sold } = req.body;
+  const { name, description, condition, price, sold,ownerName } = req.body;
   const { authorization } = req.headers;
   const ownerId = getUserId(authorization);
   console.log(req.file);
@@ -71,6 +71,7 @@ router.post("/additem", upload.single("photo"), async (req, res) => {
     ownerId,
     sold,
     image: photo,
+    ownerName
   };
   console.log(newItemData);
   try {

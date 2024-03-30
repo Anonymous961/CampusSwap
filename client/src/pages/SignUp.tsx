@@ -8,11 +8,12 @@ const SignUp = () => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
   const {signup,error,isLoading}=useSignup();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup({fname,lname,email,password});
+    await signup({fname,lname,email,password,city});
   };
   return (
     <div className="flex flex-col justify-center items-center p-10">
@@ -52,6 +53,13 @@ const SignUp = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            className="border-2 border-gray-500 p-4  my-2 w-11/12"
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
           />
           {!isLoading ? (
             <input
