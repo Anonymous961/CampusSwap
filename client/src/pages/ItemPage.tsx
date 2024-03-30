@@ -81,7 +81,7 @@ const ItemPage = () => {
               </div>
               <div className="flex gap-5">
                 <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
-                  Buy now
+                  Contact Owner
                 </button>
                 <button
                   className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center"

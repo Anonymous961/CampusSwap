@@ -35,20 +35,23 @@ const Chat = () => {
       setMessages([...messages, message]);
     });
     return () => {
-        socket.disconnect();
+      socket.disconnect();
     };
-  }, [socket,roomId]);
+  }, [socket, roomId]);
   return roomId ? (
     <div>
       <h1 className="text-3xl">Chats</h1>
-      {messages &&
-        messages.map((msg, index) => (
-          <div key={index}>
-            <p>
-                {msg.sender===user.user.id?"You":`${msg.sender}`}: {msg.content}
-            </p>
-          </div>
-        ))}
+      <div className="max-h-96 overflow-y-scroll">
+        {messages &&
+          messages.map((msg, index) => (
+            <div className="border-2 p-4  border-black" key={index}>
+              <p>
+                {msg.sender === user.user.id ? (<span className="text-red-500 font-semibold text-xl">You</span>) : `${msg.sender}`}:{" "}
+                {msg.content}
+              </p>
+            </div>
+          ))}
+      </div>
       <form onSubmit={sendMessage}>
         <input
           className="p-4 border-2"

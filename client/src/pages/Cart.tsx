@@ -73,6 +73,7 @@ const Cart = () => {
                 }`}
                 className="max-w-48 max-h-36"
                 alt=""
+                onClick={()=>navigate(`/item/${item.id}`)}
               />
               <h3 className="text-2xl">{item.itemname}</h3>
               <div className="flex items-center gap-2">

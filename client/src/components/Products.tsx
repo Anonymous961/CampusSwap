@@ -28,6 +28,11 @@ const Products = () => {
       console.log(err);
     }
   };
+  const handleContact=(item:Item)=>{
+    const buyerId=user.user.id;
+    const sellerId=item.ownerId;
+    navigate(`/chats/${buyerId}_${sellerId}`);
+  }
   function getClassForCondition(condition: string) {
     switch (condition.toLowerCase()) {
       case "best":
@@ -82,7 +87,7 @@ const Products = () => {
               <div
                 className="flex flex-col justify-between max-w-sm hover:border-2   rounded-md"
                 key={item.id}
-                onClick={()=> navigate(`/item/${item.id}`)}
+                
               >
                 <img
                   className="rounded-t-md object-fill w-full"
@@ -91,6 +96,7 @@ const Products = () => {
                     "images/" +
                     item.image
                   }
+                  onClick={()=> navigate(`/item/${item.id}`)}
                   alt=""
                 />
                 <div className="p-2">
@@ -129,7 +135,7 @@ const Products = () => {
                         Sold
                       </button>
                     ) : (
-                      <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
+                      <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md" onClick={()=>handleContact(item)}>
                         Contact Owner
                       </button>
                     )}
