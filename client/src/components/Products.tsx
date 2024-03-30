@@ -82,6 +82,7 @@ const Products = () => {
               <div
                 className="flex flex-col justify-between max-w-sm hover:border-2   rounded-md"
                 key={item.id}
+                onClick={()=> navigate(`/item/${item.id}`)}
               >
                 <img
                   className="rounded-t-md object-fill w-full"
