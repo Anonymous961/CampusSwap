@@ -11,7 +11,6 @@ const Chats = () => {
   const {roomId}=useParams();
   const [chatRooms, setChatRooms] = useState([]);
   const navigate = useNavigate();
-
   const fetchChats = async () => {
     try {
       const res = await axios.get(
@@ -44,6 +43,7 @@ const Chats = () => {
               {room}
             </div>
           ))}
+          {chatRooms.length===0 && <div>No chat room</div>}
       </div>
       {roomId && <Chat user={user} />}
     </div>

@@ -33,6 +33,10 @@ const messageSchema=new Schema({
   roomId:{
     type:String,
     required:true
+  },
+  senderName:{
+    type:String,
+    required:true
   }
 })
 

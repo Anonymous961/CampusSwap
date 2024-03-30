@@ -16,6 +16,7 @@ const Chat = () => {
       roomId,
       message: newMessage,
       sender: user.user.id,
+      senderName: user.user.username
     });
     setNewMessage("");
   };
@@ -46,7 +47,7 @@ const Chat = () => {
           messages.map((msg, index) => (
             <div className="border-2 p-4  border-black" key={index}>
               <p>
-                {msg.sender === user.user.id ? (<span className="text-red-500 font-semibold text-xl">You</span>) : `${msg.sender}`}:{" "}
+                {msg.sender === user.user.id ? (<span className="text-red-500 font-semibold text-xl">You</span>) : `${msg.senderName}`}:{" "}
                 {msg.content}
               </p>
             </div>

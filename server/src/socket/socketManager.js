@@ -33,8 +33,8 @@ function setupSocket(server) {
       socket.leave(roomId);
       console.log(`User left room : ${roomId}`);
     });
-    socket.on("sendMessage", async ({ roomId, message, sender }) => {
-      const newMessage = new Message({ roomId, content: message, sender });
+    socket.on("sendMessage", async ({ roomId, message, sender, senderName }) => {
+      const newMessage = new Message({ roomId, content: message, sender,senderName }); //need itemName and sender's username
       await newMessage.save();
 
       io.to(roomId).emit("newMessage", newMessage);
