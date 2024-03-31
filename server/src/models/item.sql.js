@@ -33,6 +33,10 @@ const Item = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     sold:DataTypes.BOOLEAN,
   },
   {

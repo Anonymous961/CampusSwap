@@ -69,14 +69,15 @@ const ItemPage = () => {
         {item && (
           <div className="flex justify-around">
             <img
-              className="rounded-t-md w-96"
+              className="rounded-t-md max-w-96"
               src={"http://localhost:4000/" + "images/" + item.image}
               alt=""
             />
-            <div className="">
+            <div className="border-2 p-10 border-gray-400">
               <div>
                 <h1 className="text-4xl mb-5">{item.itemname}</h1>
                 <p className="text-2xl text-gray-500 mb-4">{item.description}</p>
+                <p className="text-gray-800 text-2xl mb-10">Location :<span className="text-blue-400">{item.city}</span></p>
                 <p className="text-red-300 text-3xl mb-10">Rs{item.price}</p>
               </div>
               <div className="flex gap-5">

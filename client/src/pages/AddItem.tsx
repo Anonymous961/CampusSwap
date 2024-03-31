@@ -37,6 +37,7 @@ const AddItem = () => {
     formData.append("condition", condition);
     formData.append("sold", "false");
     formData.append("ownerName",user.user.username)
+    formData.append("city",user.user.city)
     try {
       const res = await axios.post(
         import.meta.env.VITE_APP_BACKEND_URL + "api/item/additem",
@@ -122,7 +123,7 @@ const AddItem = () => {
               <br />
               <button className="p-4 text-white bg-green-600 hover:bg-green-500 rounded-md">
                 {isLoading && <LoadingSpin />}
-                {!isLoading && <div>AddItem</div>}
+                {!isLoading && <div>Add Item</div>}
               </button>
             </div>
           </form>
