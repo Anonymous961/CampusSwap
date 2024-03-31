@@ -48,7 +48,7 @@ const Profile = () => {
         <UserItems itemList={itemList} isLoading={isLoading}/>
         <div>
           <button
-            className="bg-red-500 p-4 rounded-md text-white"
+            className="bg-red-500 hover:bg-red-400 p-4 rounded-md text-white"
             onClick={logout}
           >
             Sign Out

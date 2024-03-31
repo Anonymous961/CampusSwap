@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
@@ -8,7 +8,8 @@ const Chat = () => {
   const { roomId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useMemo(() => io("http://localhost:4000"), [roomId]);
+  const socket = useMemo(() => io(import.meta.env.VITE_APP_BACKEND_URL), [roomId]);
+  const scrollableDivRef = useRef(null);
   const sendMessage = (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -16,10 +17,17 @@ const Chat = () => {
       roomId,
       message: newMessage,
       sender: user.user.id,
-      senderName: user.user.username
+      senderName: user.user.username,
     });
     setNewMessage("");
   };
+  useEffect(() => {
+    // Scroll to the bottom of the container when the component mounts or updates
+    if (scrollableDivRef.current) {
+      scrollableDivRef.current.scrollTop =
+        scrollableDivRef.current.scrollHeight;
+    }
+  }, [messages]);
   useEffect(() => {
     if (!socket) return;
     socket.on("connect", () => {
@@ -40,29 +48,44 @@ const Chat = () => {
     };
   }, [socket, roomId]);
   return roomId ? (
-    <div>
+    <div className="w-3/4">
       <h1 className="text-3xl">Chats</h1>
-      <div className="max-h-96 overflow-y-scroll">
+      <div
+        className="max-h-screen overflow-y-scroll no-scollbar"
+        ref={scrollableDivRef}
+      >
         {messages &&
           messages.map((msg, index) => (
-            <div className="border-2 p-4  border-black" key={index}>
+            <div className="border-2 p-4" key={index}>
               <p>
-                {msg.sender === user.user.id ? (<span className="text-red-500 font-semibold text-xl">You</span>) : `${msg.senderName}`}:{" "}
-                {msg.content}
+                {msg.sender === user.user.id ? (
+                  <span className="text-red-500 font-semibold text-lg">
+                    You
+                  </span>
+                ) : (
+                  <span className="text-blue-400 font-semibold text-lg">
+                    {msg.senderName}
+                  </span>
+                )}
+                <br />
+                <p className="text-lg">{msg.content}</p>
               </p>
             </div>
           ))}
       </div>
-      <form onSubmit={sendMessage}>
+      <form
+        className="flex justify-between items-center input-wrapper gap-2 "
+        onSubmit={sendMessage}
+      >
         <input
-          className="p-4 border-2"
+          className="p-4 w-full"
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Enter message"
         />
         <input
-          className="bg-blue-400 p-3 rounded-md text-white"
+          className="bg-slate-800 p-3 float-right rounded-md text-white"
           type="submit"
           value="send"
         />

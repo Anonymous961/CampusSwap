@@ -8,7 +8,7 @@ import Chat from "./Chat";
 
 const Chats = () => {
   const user = useRecoilValue(UserAtom);
-  const {roomId}=useParams();
+  const { roomId } = useParams();
   const [chatRooms, setChatRooms] = useState([]);
   const navigate = useNavigate();
   const fetchChats = async () => {
@@ -30,8 +30,8 @@ const Chats = () => {
     fetchChats();
   }, []);
   return (
-    <div className="flex">
-      <div>
+    <div className="flex poppins-regular p-10 overflow-y-scroll no-scrollbar h-screen">
+      <div className="w-1/4">
         <h1 className="text-3xl">Chatrooms</h1>
         {chatRooms &&
           chatRooms.map((room, index) => (
@@ -40,11 +40,19 @@ const Chats = () => {
               onClick={() => navigate(`/chats/${room}`)}
               key={index}
             >
-              {room}
+              {`Chat ${index + 1}`}
             </div>
           ))}
-          {chatRooms.length===0 && <div>No chat room</div>}
+        {chatRooms.length === 0 && <div>No chat room</div>}
       </div>
+      {!roomId && (
+        <div className="w-3/4 flex flex-col justify-center items-center">
+          <img className="max-h-96" src="https://i.postimg.cc/wvL5GBFZ/chatss.png" alt="" />
+          <h2 className="text-3xl text-gray-700 font-medium">
+            Click Chat to Enter
+          </h2>
+        </div>
+      )}
       {roomId && <Chat user={user} />}
     </div>
   );

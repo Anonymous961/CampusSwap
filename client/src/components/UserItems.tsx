@@ -9,7 +9,7 @@ const UserItems = ({itemList,isLoading}) => {
       <div className="flex justify-between">
         <h2 className="text-4xl mb-8">User Items</h2>
         <button
-          className="p-2 text-white bg-green-600 hover:bg-green-500 rounded-md"
+          className="p-2 max-h-14 text-white bg-slate-700 hover:bg-green-500"
           onClick={() => navigate("/additem")}
         >
           Add Item
