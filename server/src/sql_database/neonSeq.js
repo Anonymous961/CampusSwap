@@ -1,6 +1,6 @@
 require("dotenv").config()
 const {Sequelize}=require("sequelize");
-const db_url=(process.env.DATABASE_URL);
+const db_url=process.env.DATABASE_URL;
 const sequelize=new Sequelize(db_url);
 // const User=require("../models/user.sql")
 const Item=require("../models/item.sql")
