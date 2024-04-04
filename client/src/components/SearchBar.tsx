@@ -35,7 +35,7 @@ const SearchBar = ({ setResults }) => {
       />
       <input
         type="text"
-        className="focus:outline-none text-2xl"
+        className="focus:outline-none text-2xl w-full"
         value={input}
         onChange={(e) => handleChange(e.target.value)}
         placeholder="Type to search"

@@ -2,12 +2,13 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpin from "./LoadingSpin";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
 import { Item } from "../store/dataTypes";
 import { useNavigate } from "react-router-dom";
 import { UserAtom } from "../store/atoms/user";
+import Product from "./Product";
 
 const Products = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -28,11 +29,11 @@ const Products = () => {
       console.log(err);
     }
   };
-  const handleContact=(item:Item)=>{
-    const buyerId=user.user.id;
-    const sellerId=item.ownerId;
+  const handleContact = (item: Item) => {
+    const buyerId = user.user.id;
+    const sellerId = item.ownerId;
     navigate(`/chats/${buyerId}_${sellerId}`);
-  }
+  };
   function getClassForCondition(condition: string) {
     switch (condition.toLowerCase()) {
       case "best":
@@ -72,76 +73,26 @@ const Products = () => {
     getItems();
   }, []);
   return (
-    <section className="grid grid-cols-6 mx-8">
+    <section className="grid lg:grid-cols-6 grid-cols-1 mx-8">
       <div className="rounded-md p-5">
-        <h3 className="text-2xl">Filter</h3>
+        <h3 className="text-3xl font-semibold">Filter</h3>
       </div>
-      <div className="col-span-5 p-5 border-2">
+      <div className="lg:col-span-5 p-5 border-2">
         <h3 className="text-4xl mx-2 mb-5">All Items</h3>
         <span className="flex justify-center">
           {isLoading && <LoadingSpin />}
         </span>
-        <div className="grid grid-cols-4 gap-5 m-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
           {items.map((item) => {
             return (
-              <div
-                className="flex flex-col justify-between max-w-sm hover:border-2   rounded-md"
-                key={item.id}
-                
-              >
-                <img
-                  className="rounded-t-md object-fill w-full"
-                  src={
-                    import.meta.env.VITE_APP_BACKEND_URL +
-                    "images/" +
-                    item.image
-                  }
-                  onClick={()=> navigate(`/item/${item.id}`)}
-                  alt=""
-                />
-                <div className="p-2">
-                  <div className="flex flex-row justify-between">
-                    <h4 className="text-2xl my-2 ">{item.itemname}</h4>
-                    <p className="text-xl my-2 text-orange-700">
-                      ₹{item.price}
-                    </p>
-                  </div>
-                  <p className="my-2 font-medium">
-                    Condition :
-                    <span className={getClassForCondition(item.condition)}>
-                      {item.condition}
-                    </span>
-                  </p>
-                  <p className="font-bold">
-                    {formatDistanceToNow(new Date(item.createdAt), {
-                      addSuffix: true,
-                    })}
-                  </p>
-                  <div className="flex flex-row justify-between">
-                    <button
-                      className="p-4 w-16 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center"
-                      onClick={() => {
-                        if (user) {
-                          handleCart(item);
-                        } else {
-                          navigate("/login");
-                        }
-                      }}
-                    >
-                      <AiOutlineShoppingCart className="" />
-                    </button>
-                    {item.sold ? (
-                      <button className="p-4 w-24 bg-gray-300 rounded-md shadow-md">
-                        Sold
-                      </button>
-                    ) : (
-                      <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md" onClick={()=>handleContact(item)}>
-                        Contact Owner
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <Product
+              key={item.id}
+                item={item}
+                getClassForCondition={getClassForCondition}
+                handleCart={handleCart}
+                handleContact={handleContact}
+                user={user}
+              />
             );
           })}
         </div>

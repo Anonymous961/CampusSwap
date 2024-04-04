@@ -1,13 +1,12 @@
-import Search from "../components/Search";
 import Products from "../components/Products";
 import { useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { UserAtom } from "../store/atoms/user";
 import axios from "axios";
 import { CartAtom } from "../store/atoms/cart";
+import Herosection from "../components/Herosection";
 
 const Home = () => {
-  
   const setCart = useSetRecoilState(CartAtom);
   const setUser = useSetRecoilState(UserAtom);
   useEffect(() => {
@@ -25,34 +24,21 @@ const Home = () => {
                   authorization: "Bearer " + user.token,
                 },
               }
-              );
-              setCart(res.data.cart);
-            }
+            );
+            setCart(res.data.cart);
           }
-        } catch (err) {
-          console.log(err);
         }
-      };
-      
-      fetchData();
-    }, [setCart, setUser]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-    return (
+    fetchData();
+  }, [setCart, setUser]);
+
+  return (
     <div>
-      <div className="flex flex-row justify-around items-center p-5  mx-8">
-        <div className="poppins-regular">
-          <h1 className="text-4xl m-2">
-            Discover sustainable options for <br /> your furry friends
-          </h1>
-          <p className="m-2 text-xl text-gray-600">
-            Browse by category, brand or eco-friendly deals
-          </p>
-          <div className="mx-2 my-8">
-            <Search />
-          </div>
-        </div>
-        <img src="https://i.postimg.cc/xdvkVtV0/Image.png" alt="" />
-      </div>
+      <Herosection/>
       <Products />
     </div>
   );

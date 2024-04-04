@@ -7,15 +7,17 @@ const Navbar = () => {
   const navigate = useNavigate();
   const User = useRecoilValue(UserAtom);
   return (
-    <div className="flex flex-row justify-between p-2 px-4 mx-8 my-5 border-b-2  border-gray-300 shadow-lg poppins-regular">
-      <div className="flex flex-row items-center justify-between gap-10">
-        <img
-          src="https://i.postimg.cc/BvXyZQcc/campus-Swaplogo.png"
-          width={"100px"}
-          onClick={() => navigate("/")}
-        />
+    <div className="grid grid-cols-1 lg:grid-cols-3 p-2  border-b-2  border-gray-300 shadow-lg poppins-regular">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:col-span-2 gap-15">
+        <div className="flex justify-center">
+          <img
+            src="https://i.postimg.cc/BvXyZQcc/campus-Swaplogo.png"
+            width={"100px"}
+            onClick={() => navigate("/")}
+          />
+        </div>
 
-        <ul className="flex flex-row items-center gap-5 ">
+        <ul className="grid grid-cols-1 text-center lg:grid-cols-4 md:grid-cols-2 items-center gap-5 ">
           <Link to="/">
             <li className="p-2 text-xl hover:underline">Home</li>
           </Link>
@@ -30,16 +32,19 @@ const Navbar = () => {
           )}
         </ul>
       </div>
-      <div className="flex justify-items-end items-center gap-10">
-        {User && (
-          <Link to="/cart">
-            <FaCartPlus className="text-4xl" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
+        <div className="flex justify-center lg:justify-end m-5">
+          {User && (
+            <Link to="/cart">
+              <FaCartPlus className="text-4xl" />
+            </Link>
+          )}
+        </div>
+        <div className="flex justify-center lg:justify-start">
+          <Link to={User ? "/profile" : "/login"}>
+            <FaUser className="text-4xl" />
           </Link>
-        )}
-        <Link to={User ? "/profile" : "/login"}>
-          <FaUser className="text-4xl" />
-        </Link>
-        {/* <Dropdown/> */}
+        </div>
       </div>
     </div>
   );
