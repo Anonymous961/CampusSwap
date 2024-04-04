@@ -29,6 +29,10 @@ const Profile = () => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
+      console.log(err.response.status)
+      if(err.response.status===405){
+        logout();
+      }
       console.log(err.response.data);
     }
   };

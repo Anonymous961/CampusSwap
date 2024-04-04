@@ -5,12 +5,14 @@ import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
 import axios from "axios";
 import Chat from "./Chat";
+import { useLogout } from "../hooks/useLogout";
 
 const Chats = () => {
   const user = useRecoilValue(UserAtom);
   const { roomId } = useParams();
   const [chatRooms, setChatRooms] = useState([]);
   const navigate = useNavigate();
+  const { logout } = useLogout();
   const fetchChats = async () => {
     try {
       const res = await axios.get(
@@ -24,6 +26,9 @@ const Chats = () => {
       setChatRooms(res.data.chatRooms);
     } catch (error: any) {
       console.log(error.response.data.mesage);
+      if (error.response.status === 405) {
+        logout();
+      }
     }
   };
   useEffect(() => {
@@ -47,7 +52,11 @@ const Chats = () => {
       </div>
       {!roomId && (
         <div className="w-3/4 flex flex-col justify-center items-center">
-          <img className="max-h-96" src="https://i.postimg.cc/wvL5GBFZ/chatss.png" alt="" />
+          <img
+            className="max-h-96"
+            src="https://i.postimg.cc/wvL5GBFZ/chatss.png"
+            alt=""
+          />
           <h2 className="text-3xl text-gray-700 font-medium">
             Click Chat to Enter
           </h2>
