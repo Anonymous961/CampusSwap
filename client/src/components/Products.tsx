@@ -1,4 +1,3 @@
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpin from "./LoadingSpin";
@@ -76,6 +75,8 @@ const Products = () => {
     <section className="grid lg:grid-cols-6 grid-cols-1 mx-8">
       <div className="rounded-md p-5">
         <h3 className="text-3xl font-semibold">Filter</h3>
+        <button className="border-2 w-36 px-5 py-3 m-2">All items</button>
+        <button className="border-2 w-36 px-5 py-3 m-2">My city</button>
       </div>
       <div className="lg:col-span-5 p-5 border-2">
         <h3 className="text-4xl mx-2 mb-5">All Items</h3>

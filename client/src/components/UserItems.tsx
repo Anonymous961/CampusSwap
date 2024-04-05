@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import LoadingSpin from "./LoadingSpin";
 import ToggleButton from "./ToggleButton";
 
-const UserItems = ({itemList,isLoading}) => {
-    const navigate=useNavigate();
+const UserItems = ({ itemList, isLoading }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex justify-between">
@@ -18,7 +18,7 @@ const UserItems = ({itemList,isLoading}) => {
       <span className="flex justify-center">
         {isLoading && <LoadingSpin />}
       </span>
-      <div className="grid grid-cols-5 gap-5 m-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 overflow-y-scroll gap-5 m-2">
         {itemList.map((item) => {
           return (
             <div
@@ -38,7 +38,6 @@ const UserItems = ({itemList,isLoading}) => {
                   <p className="text-xl my-2">₹{item.price}</p>
                 </div>
                 <p className="my-2">Condition: {item.condition}</p>
-                {/* <div className="flex flex-row "> */}
                 {item.sold ? (
                   <button className="p-4 w-24 bg-gray-300 rounded-md shadow-md">
                     Resell
@@ -46,7 +45,6 @@ const UserItems = ({itemList,isLoading}) => {
                 ) : (
                   <ToggleButton />
                 )}
-                {/* </div> */}
               </div>
             </div>
           );

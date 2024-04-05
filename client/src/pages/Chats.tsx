@@ -35,8 +35,8 @@ const Chats = () => {
     fetchChats();
   }, []);
   return (
-    <div className="flex poppins-regular p-10 overflow-y-scroll no-scrollbar h-screen">
-      <div className="w-1/4">
+    <div className="grid grid-cols-1 lg:grid-cols-6 poppins-regular p-10 overflow-y-scroll no-scrollbar h-screen">
+      <div className="lg:col-span-2 ">
         <h1 className="text-3xl">Chatrooms</h1>
         {chatRooms &&
           chatRooms.map((room, index) => (
@@ -51,7 +51,7 @@ const Chats = () => {
         {chatRooms.length === 0 && <div>No chat room</div>}
       </div>
       {!roomId && (
-        <div className="w-3/4 flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center">
           <img
             className="max-h-96"
             src="https://i.postimg.cc/wvL5GBFZ/chatss.png"

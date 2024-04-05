@@ -48,7 +48,7 @@ const Chat = () => {
     };
   }, [socket, roomId]);
   return roomId ? (
-    <div className="w-3/4">
+    <div className="lg:col-span-4 w-full">
       <h1 className="text-3xl">Chats</h1>
       <div
         className="max-h-screen overflow-y-scroll no-scollbar"
@@ -74,7 +74,7 @@ const Chat = () => {
           ))}
       </div>
       <form
-        className="flex justify-between items-center input-wrapper gap-2 "
+        className="flex justify-between items-center input-wrapper gap-2  border-2"
         onSubmit={sendMessage}
       >
         <input
