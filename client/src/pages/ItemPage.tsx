@@ -1,13 +1,14 @@
 import axios from "axios";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import LoadingSpin from "../components/LoadingSpin";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
 import { Item } from "../store/dataTypes";
+import { UserAtom } from "../store/atoms/user";
 
 const ItemPage = () => {
   const [item, setItem] = useState(null);
@@ -15,7 +16,8 @@ const ItemPage = () => {
   const params = useParams();
   const [cart, setCart] = useRecoilState(CartAtom);
   const productId = params.id;
-  console.log(productId);
+  const user=useRecoilValue(UserAtom);
+  const navigate = useNavigate();
   const fetchItem = async () => {
     try {
       setIsLoading(true);
@@ -29,6 +31,11 @@ const ItemPage = () => {
       setIsLoading(false);
       console.log(error);
     }
+  };
+  const handleContact = (item: Item) => {
+    const buyerId = user.user.id;
+    const sellerId = item.ownerId;
+    navigate(`/chats/${buyerId}_${sellerId}`);
   };
   const handleCart = (item: Item) => {
     const existingItemIndex = cart.findIndex(
@@ -76,12 +83,19 @@ const ItemPage = () => {
             <div className="border-2 p-10 border-gray-400">
               <div>
                 <h1 className="text-4xl mb-5">{item.itemname}</h1>
-                <p className="text-2xl text-gray-500 mb-4">{item.description}</p>
-                <p className="text-gray-800 text-2xl mb-10">Location :<span className="text-blue-400">{item.city}</span></p>
+                <p className="text-2xl text-gray-500 mb-4">
+                  {item.description}
+                </p>
+                <p className="text-gray-800 text-2xl mb-10">
+                  Location :<span className="text-blue-400">{item.city}</span>
+                </p>
                 <p className="text-red-300 text-3xl mb-10">Rs{item.price}</p>
               </div>
               <div className="flex gap-5">
-                <button className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md">
+                <button
+                  className="p-4 w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md"
+                  onClick={() => handleContact(item)}
+                >
                   Contact Owner
                 </button>
                 <button
