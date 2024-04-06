@@ -13,7 +13,9 @@ const Products = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useRecoilState(CartAtom);
+  const [filter, setFilter] = useState("allitems");
   const user = useRecoilValue(UserAtom);
+  console.log(filter);
   const navigate = useNavigate();
   const getItems = async () => {
     try {
@@ -75,8 +77,30 @@ const Products = () => {
     <section className="grid lg:grid-cols-6 grid-cols-1 mx-8">
       <div className="rounded-md p-5">
         <h3 className="text-3xl font-semibold">Filter</h3>
-        <button className="border-2 w-36 px-5 py-3 m-2">All items</button>
-        <button className="border-2 w-36 px-5 py-3 m-2">My city</button>
+        <div>
+          <input
+            type="radio"
+            value="allitems"
+            checked={filter === "allitems"}
+            onChange={() => setFilter("allitems")}
+            name="filter"
+            id="allItems"
+          />
+          <label htmlFor="allItems">All items</label>
+        </div>
+        {user && (
+          <div>
+            <input
+              type="radio"
+              value="mycity"
+              checked={filter === "mycity"}
+              onChange={() => setFilter("mycity")}
+              name="filter"
+              id="myCity"
+            />
+            <label htmlFor="myCity">My City</label>
+          </div>
+        )}
       </div>
       <div className="lg:col-span-5 p-5 border-2">
         <h3 className="text-4xl mx-2 mb-5">All Items</h3>
@@ -84,17 +108,32 @@ const Products = () => {
           {isLoading && <LoadingSpin />}
         </span>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
-          {items.map((item) => {
-            return (
-              <Product
-              key={item.id}
-                item={item}
-                getClassForCondition={getClassForCondition}
-                handleCart={handleCart}
-                handleContact={handleContact}
-                user={user}
-              />
-            );
+          {items.map((item: Item) => {
+            if (filter === "mycity") {
+              if (item.city === user.user.city) {
+                return (
+                  <Product
+                    key={item.id}
+                    item={item}
+                    getClassForCondition={getClassForCondition}
+                    handleCart={handleCart}
+                    handleContact={handleContact}
+                    user={user}
+                  />
+                );
+              }
+            } else {
+              return (
+                <Product
+                  key={item.id}
+                  item={item}
+                  getClassForCondition={getClassForCondition}
+                  handleCart={handleCart}
+                  handleContact={handleContact}
+                  user={user}
+                />
+              );
+            }
           })}
         </div>
       </div>

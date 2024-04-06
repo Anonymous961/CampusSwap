@@ -11,6 +11,7 @@ export interface Item {
     createdAt:Date;
     quantity:number;
     ownerId:string;
+    city:string;
 }
 export interface User{
     username:string;
