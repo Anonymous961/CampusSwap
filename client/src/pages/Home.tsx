@@ -7,9 +7,9 @@ const Home = () => {
   return (
     <div>
       <Herosection />
-      <Suspense fallback={<LoadingSpin />}>
-        <Products />
-      </Suspense>
+      {/* <Suspense fallback={<LoadingSpin />}> */}
+      <Products />
+      {/* </Suspense> */}
     </div>
   );
 };

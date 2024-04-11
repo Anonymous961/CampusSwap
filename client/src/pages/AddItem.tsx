@@ -26,7 +26,7 @@ const AddItem = () => {
     setFile(file);
     setImage(window.URL.createObjectURL(file));
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
     const formData = new FormData();
@@ -36,8 +36,8 @@ const AddItem = () => {
     formData.append("price", price);
     formData.append("condition", condition);
     formData.append("sold", "false");
-    formData.append("ownerName",user.user.username)
-    formData.append("city",user.user.city)
+    formData.append("ownerName", user.user.username);
+    formData.append("city", user.user.city);
     try {
       const res = await axios.post(
         import.meta.env.VITE_APP_BACKEND_URL + "api/item/additem",
@@ -55,7 +55,7 @@ const AddItem = () => {
         navigate("/profile");
       }, 8000);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.response.data);
       setError(err.response.data.error);
       setIsLoading(false);

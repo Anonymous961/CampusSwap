@@ -4,7 +4,7 @@ const { Message, User } = require("../models/userModel");
 function setupSocket(server) {
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: process.env.FRONTEND_URL,
       methods: ["GET", "POST"],
       credentials: true,
     },
@@ -33,12 +33,20 @@ function setupSocket(server) {
       socket.leave(roomId);
       console.log(`User left room : ${roomId}`);
     });
-    socket.on("sendMessage", async ({ roomId, message, sender, senderName }) => {
-      const newMessage = new Message({ roomId, content: message, sender,senderName }); //need itemName and sender's username
-      await newMessage.save();
+    socket.on(
+      "sendMessage",
+      async ({ roomId, message, sender, senderName }) => {
+        const newMessage = new Message({
+          roomId,
+          content: message,
+          sender,
+          senderName,
+        }); //need itemName and sender's username
+        await newMessage.save();
 
-      io.to(roomId).emit("newMessage", newMessage);
-    });
+        io.to(roomId).emit("newMessage", newMessage);
+      }
+    );
 
     socket.on("disconnect", () => {
       console.log("user disconnected", socket.id);
