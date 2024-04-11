@@ -1,4 +1,10 @@
-export default function DetailBox({ label, value }) {
+export default function DetailBox({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
   return (
     <div className=" col-span-1 md:col-span-2 lg:col-span-2 flex text-2xl">
       <p className="w-1/2">{label} </p>

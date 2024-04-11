@@ -41,7 +41,8 @@ const getItemByName = async (req, res) => {
   }
 };
 const addItem = async (req, res) => {
-  const { name, description, condition, price, sold, ownerName,city } = req.body;
+  const { name, description, condition, price, sold, ownerName, city } =
+    req.body;
   const { authorization } = req.headers;
   const ownerId = getUserId(authorization);
   console.log(req.file);
@@ -58,9 +59,9 @@ const addItem = async (req, res) => {
     sold,
     image: photo,
     ownerName,
-    city
+    city,
   };
-  console.log(newItemData);
+  // console.log(newItemData);
   try {
     const item = await ItemModel.create(newItemData);
 

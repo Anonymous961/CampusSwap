@@ -118,7 +118,7 @@ const updateCart = async (req, res) => {
   const { cart } = req.body;
   try {
     // console.log(cart);
-    console.dir(cart, { depth: null });
+    // console.dir(cart, { depth: null });
     const response = await UserMongo.findOneAndUpdate(
       { _id: ownerId },
       { cart },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
@@ -13,24 +13,29 @@ const AddItem = () => {
   const [price, setPrice] = useState("");
   const [description, setDesription] = useState("");
   const [condition, setCondition] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState(null);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string | null>(null);
   const [successData, setSuccessData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const options = ["Best", "Good", "Fine", "Bad"];
-  const handlePhoto = (e) => {
+  const handlePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = e.target.files[0];
-    setFile(file);
-    setImage(window.URL.createObjectURL(file));
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+      const imageUrl = window.URL.createObjectURL(file);
+      setImage(imageUrl);
+    }
   };
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const formData = new FormData();
-    formData.append("photo", file);
+    if (file) {
+      formData.append("photo", file);
+    }
     formData.append("name", itemname);
     formData.append("description", description);
     formData.append("price", price);
@@ -49,15 +54,17 @@ const AddItem = () => {
           },
         }
       );
-      console.log(res.data);
+      // console.log(res.data);
       setSuccessData(res.data);
       setTimeout(() => {
         navigate("/profile");
       }, 8000);
       setIsLoading(false);
-    } catch (err: any) {
-      console.error(err.response.data);
-      setError(err.response.data.error);
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        console.error(err.response.data);
+        setError(err.response.data.error);
+      }
       setIsLoading(false);
     }
   };

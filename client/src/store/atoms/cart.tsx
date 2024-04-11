@@ -8,7 +8,7 @@ export const CartAtom = atom({
     key: "fetchcart",
     get: async ({ get }) => {
       const user = get(UserAtom);
-      if (user) {
+      try {
         const res = await axios.get(
           import.meta.env.VITE_APP_BACKEND_URL + "api/user/cart",
           {
@@ -21,7 +21,8 @@ export const CartAtom = atom({
           return [];
         }
         return res.data.cart;
-      } else {
+      } catch (error) {
+        console.error("Error fetching cart: ", error);
         return [];
       }
     },
