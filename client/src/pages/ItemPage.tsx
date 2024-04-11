@@ -16,13 +16,13 @@ const ItemPage = () => {
   const params = useParams();
   const [cart, setCart] = useRecoilState(CartAtom);
   const productId = params.id;
-  const user=useRecoilValue(UserAtom);
+  const user = useRecoilValue(UserAtom);
   const navigate = useNavigate();
   const fetchItem = async () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `http://localhost:4000/api/item/allitems/${productId}`
+        `${import.meta.env.VITE_APP_BACKEND_URL}api/item/allitems/${productId}`
       );
       console.log(res.data);
       setItem(res.data);
@@ -77,7 +77,11 @@ const ItemPage = () => {
           <div className="flex justify-around">
             <img
               className="rounded-t-md max-w-96"
-              src={"http://localhost:4000/" + "images/" + item.image}
+              src={
+                `${import.meta.env.VITE_APP_BACKEND_URL}` +
+                "images/" +
+                item.image
+              }
               alt=""
             />
             <div className="border-2 p-10 border-gray-400">
