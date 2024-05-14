@@ -7,7 +7,7 @@ export default function Product({
   getClassForCondition,
   handleCart,
   handleContact,
-  user
+  user,
 }) {
   const navigate = useNavigate();
   return (
@@ -24,7 +24,9 @@ export default function Product({
       <div className="p-2">
         <div className="grid grid-col-1 lg:grid-cols-2 justify-between">
           <h4 className="text-2xl my-2 ">{item.itemname}</h4>
-          <p className="text-xl my-2 text-orange-700">₹{item.price}</p>
+          <p className="text-xl my-2 text-orange-700 lg:text-right">
+            ₹{item.price}
+          </p>
         </div>
         <p className="my-2 font-medium">
           Condition :

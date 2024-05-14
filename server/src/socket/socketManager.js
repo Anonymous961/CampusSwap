@@ -2,6 +2,7 @@ const { Server } = require("socket.io");
 const { Message, User } = require("../models/userModel");
 
 function setupSocket(server) {
+  // console.log("frontend url:", process.env.FRONTEND_URL);
   const io = new Server(server, {
     cors: {
       origin: process.env.FRONTEND_URL,
