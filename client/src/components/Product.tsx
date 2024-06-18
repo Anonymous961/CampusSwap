@@ -1,6 +1,15 @@
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { formatDistanceToNow } from "date-fns";
+import { Item, User } from "../store/dataTypes";
+
+export interface ProductType {
+  item: Item;
+  getClassForCondition: (text: string) => string;
+  handleCart: (item: Item) => void;
+  handleContact: (item: Item) => void;
+  user: User;
+}
 
 export default function Product({
   item,
@@ -8,7 +17,7 @@ export default function Product({
   handleCart,
   handleContact,
   user,
-}) {
+}: ProductType) {
   const navigate = useNavigate();
   return (
     <div

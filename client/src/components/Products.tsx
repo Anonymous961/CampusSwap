@@ -1,13 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpin from "./LoadingSpin";
-
 import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
 import { Item } from "../store/dataTypes";
 import { useNavigate } from "react-router-dom";
 import { UserAtom } from "../store/atoms/user";
 import Product from "./Product";
+import { FilterLabel } from "./FilterLabel";
+
+export interface CartType {
+  condition: string;
+  createdAt: string;
+  description: string;
+  id: string;
+  image: string;
+  itemname: string;
+  ownerId: string;
+  price: number;
+  quantity: number;
+  sold: boolean;
+  updatedAt: string;
+  _id: string;
+}
 
 const Products = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -15,7 +30,6 @@ const Products = () => {
   const [cart, setCart] = useRecoilState(CartAtom);
   const [filter, setFilter] = useState("allitems");
   const user = useRecoilValue(UserAtom);
-  console.log(filter);
   const navigate = useNavigate();
   const getItems = async () => {
     try {
@@ -55,7 +69,8 @@ const Products = () => {
     );
 
     if (existingItemIndex !== -1) {
-      setCart((prevCart) => {
+      setCart((prevCart: CartType[]) => {
+        console.log("prevcart", prevCart);
         const updatedCart = prevCart.map((cartItem, index) => {
           if (index === existingItemIndex) {
             return { ...cartItem, quantity: cartItem.quantity + 1 };
@@ -77,53 +92,32 @@ const Products = () => {
     <section className="grid lg:grid-cols-6 grid-cols-1 mx-8">
       <div className="rounded-md p-5">
         <h3 className="text-3xl font-semibold">Filter</h3>
-        <div>
-          <input
-            type="radio"
-            value="allitems"
-            checked={filter === "allitems"}
-            onChange={() => setFilter("allitems")}
-            name="filter"
-            id="allItems"
-          />
-          <label htmlFor="allItems">All items</label>
-        </div>
+        <FilterLabel
+          checked={filter === "allitems"}
+          onChange={() => setFilter("allitems")}
+          name="filter"
+          id="allItems"
+          label="All items"
+        />
         {user && (
-          <div>
-            <input
-              type="radio"
-              value="mycity"
-              checked={filter === "mycity"}
-              onChange={() => setFilter("mycity")}
-              name="filter"
-              id="myCity"
-            />
-            <label htmlFor="myCity">My City</label>
-          </div>
+          <FilterLabel
+            checked={filter === "mycity"}
+            onChange={() => setFilter("mycity")}
+            name="filter"
+            id="myCity"
+            label="My city"
+          />
         )}
       </div>
-      <div className="lg:col-span-5 p-5 border-2">
+      <div className="lg:col-span-5 p-5 ">
         <h3 className="text-4xl mx-2 mb-5">All Items</h3>
         <span className="flex justify-center">
           {isLoading && <LoadingSpin />}
         </span>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
-          {items.map((item: Item) => {
-            if (filter === "mycity") {
-              if (item.city === user.user.city) {
-                return (
-                  <Product
-                    key={item.id}
-                    item={item}
-                    getClassForCondition={getClassForCondition}
-                    handleCart={handleCart}
-                    handleContact={handleContact}
-                    user={user}
-                  />
-                );
-              }
-            } else {
-              return (
+          {items.map(
+            (item: Item) =>
+              (filter !== "mycity" || item.city === user.user.city) && (
                 <Product
                   key={item.id}
                   item={item}
@@ -132,9 +126,8 @@ const Products = () => {
                   handleContact={handleContact}
                   user={user}
                 />
-              );
-            }
-          })}
+              )
+          )}
         </div>
       </div>
     </section>

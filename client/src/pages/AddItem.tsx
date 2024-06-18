@@ -6,6 +6,7 @@ import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
 import InfoBanner from "../components/InfoBanner";
 import LoadingSpin from "../components/LoadingSpin";
+import { LabelledInput } from "../components/LabelledInput";
 
 const AddItem = () => {
   const user = useRecoilValue(UserAtom);
@@ -54,7 +55,6 @@ const AddItem = () => {
           },
         }
       );
-      // console.log(res.data);
       setSuccessData(res.data);
       setTimeout(() => {
         navigate("/profile");
@@ -81,12 +81,8 @@ const AddItem = () => {
             onSubmit={handleSubmit}
           >
             <div>
-              <input
-                type="text"
-                className="border-2 border-gray-500 p-4  my-3 w-11/12"
-                required
+              <LabelledInput
                 placeholder="Item Name"
-                value={itemname}
                 onChange={(e) => setItemname(e.target.value)}
               />
               <input
@@ -116,19 +112,15 @@ const AddItem = () => {
                   return <option key={index}>{option}</option>;
                 })}
               </select>
-              <input
-                type="number"
-                className="border-2 border-gray-500 p-4  my-3 w-11/12"
-                required
+              <LabelledInput
                 placeholder="Price"
-                min={0}
-                value={price}
                 onChange={(e) => {
                   setPrice(e.target.value);
                 }}
+                type="number"
               />
               <br />
-              <button className="p-4 text-white bg-green-600 hover:bg-green-500 rounded-md">
+              <button className="border-2 border-gray-400 w-11/12 my-3 mb-4 bg-slate-800 hover:bg-slate-700 text-white py-3 px-4">
                 {isLoading && <LoadingSpin />}
                 {!isLoading && <div>Add Item</div>}
               </button>
