@@ -21,7 +21,7 @@ const Navbar = () => {
         <ul className="grid grid-cols-1 text-center lg:grid-cols-4 md:grid-cols-2 items-center gap-5 ">
           <Nav path={"/"} label={"Home"} />
           <Nav path={"/contact"} label={"Contact"} />
-          <Nav path={"/about"} label={"About"} />
+          {/* <Nav path={"/about"} label={"About"} /> */}
           {User && <Nav path={"/chats"} label={"Chats"} />}
         </ul>
       </div>

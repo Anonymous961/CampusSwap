@@ -23,7 +23,7 @@ const SignUp = () => {
       {error && <Alert message={error} />}
       <div>
         <form
-          className="flex flex-col justify-center items-center p-10 border-2 poppins-regular"
+          className="flex flex-col justify-center items-center p-10 poppins-regular"
           onSubmit={handleSubmit}
         >
           <h2 className="m-8 text-4xl ">Sign Up Here</h2>

@@ -53,7 +53,7 @@ const Profile = () => {
   }, []);
   return (
     <section className="flex flex-col justify-center p-5">
-      <div className="poppins-regular border-2 shadow-lg p-8">
+      <div className="poppins-regular shadow-lg p-8">
         {/* <h1 className="text-4xl">Profile</h1> */}
         <UserDetails
           userCreateDate={userCreateDate}

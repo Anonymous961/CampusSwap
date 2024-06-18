@@ -5,7 +5,7 @@ import LoadingSpin from "../components/LoadingSpin";
 
 const Home = () => {
   return (
-    <div>
+    <div className="min-h-screen w-full">
       <Suspense fallback={<LoadingSpin />}>
         <Herosection />
       </Suspense>
