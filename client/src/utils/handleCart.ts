@@ -18,7 +18,7 @@ export const updateCart = async (cart: Item[], user: User) => {
 
       console.log(err.response?.data.message);
     } else {
-      console.log(err.message)
+      console.log((err as Error).message)
     }
   }
 };
