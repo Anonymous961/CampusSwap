@@ -1,5 +1,6 @@
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Item } from "../store/dataTypes";
+import { CustomButton } from "./CustomButton";
 
 interface CartItemType {
   item: Item;
@@ -19,10 +20,7 @@ export function CartItem({
   handleDelete,
 }: CartItemType) {
   return (
-    <div
-      className="items-center grid grid-cols-6 border-2 p-2 m-1"
-      key={item.id}
-    >
+    <div className="items-center grid grid-cols-6 border-2 p-2" key={item.id}>
       <img
         src={`${import.meta.env.VITE_APP_BACKEND_URL}/images/${item.image}`}
         className="max-w-48 max-h-36"
@@ -46,12 +44,10 @@ export function CartItem({
         </button>
       </div>
       <p className="text-xl text-orange-700"> Rs.{item.price}</p>
-      <button
-        className="border-2 p-2 bg-gray-950 text-white hover:text-yellow-300 rounded-md "
+      <CustomButton
         onClick={() => handleContact(item)}
-      >
-        Contact Owner
-      </button>
+        label={"Contact Owner"}
+      />
       <div className="flex justify-center">
         <FaRegTrashAlt size={30} onClick={() => handleDelete(item)} />
       </div>

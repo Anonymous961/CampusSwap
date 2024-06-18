@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LoadingSpin from "../components/LoadingSpin";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { CartAtom } from "../store/atoms/cart";
@@ -9,6 +8,7 @@ import { Item } from "../store/dataTypes";
 import { UserAtom } from "../store/atoms/user";
 import { CartType } from "../components/Products";
 import { CustomButton } from "../components/CustomButton";
+import { ItemSkeleton } from "../components/ItemDetailsSkeleton";
 
 const ItemPage = () => {
   const [item, setItem] = useState<Item | null>(null);
@@ -63,7 +63,7 @@ const ItemPage = () => {
     <section className="flex flex-col justify-center min-h-screen p-4">
       <div className="poppins-regular">
         {isLoading ? (
-          <LoadingSpin />
+          <ItemSkeleton />
         ) : (
           <div className="flex flex-col justify-center">
             <h1 className="text-4xl mb-10">Item details</h1>

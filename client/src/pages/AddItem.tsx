@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import InfoBanner from "../components/InfoBanner";
 import LoadingSpin from "../components/LoadingSpin";
 import { LabelledInput } from "../components/LabelledInput";
+import { SubmitButton } from "../components/SubmitButton";
 
 const AddItem = () => {
   const user = useRecoilValue(UserAtom);
@@ -120,10 +121,13 @@ const AddItem = () => {
                 type="number"
               />
               <br />
-              <button className="border-2 border-gray-400 w-11/12 my-3 mb-4 bg-slate-800 hover:bg-slate-700 text-white py-3 px-4">
-                {isLoading && <LoadingSpin />}
-                {!isLoading && <div>Add Item</div>}
-              </button>
+              {isLoading ? (
+                <div className="flex justify-center">
+                  <LoadingSpin />
+                </div>
+              ) : (
+                <SubmitButton label={"Add Item"} />
+              )}
             </div>
           </form>
           <div className="border-2  w-1/2">

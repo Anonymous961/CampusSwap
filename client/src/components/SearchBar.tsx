@@ -2,12 +2,19 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { Item } from "../store/dataTypes";
-const SearchBar = ({ setResults }) => {
+import { CartType } from "./Products";
+
+export interface SearchBarType {
+  setResults: (results: Array<CartType>) => void;
+}
+
+const SearchBar = ({ setResults }: SearchBarType) => {
   const [input, setInput] = useState("");
   const fetchData = (value: string) => {
     axios
       .get(import.meta.env.VITE_APP_BACKEND_URL + `api/item/allitems`)
       .then((res) => {
+        console.log(res);
         const newValue = value.toLowerCase();
         const results = res.data.filter((item: Item) => {
           return (
@@ -16,6 +23,7 @@ const SearchBar = ({ setResults }) => {
             item.itemname.toLowerCase().includes(newValue)
           );
         });
+        console.log(results);
         setResults(results);
       });
   };

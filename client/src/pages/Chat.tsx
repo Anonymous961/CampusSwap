@@ -1,16 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
 import { UserAtom } from "../store/atoms/user";
+
 const Chat = () => {
   const user = useRecoilValue(UserAtom);
   const { roomId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useMemo(() => io(import.meta.env.VITE_APP_BACKEND_URL), [roomId]);
+  const socket = useMemo(
+    () => io(import.meta.env.VITE_APP_BACKEND_URL),
+    [roomId]
+  );
   const scrollableDivRef = useRef(null);
-  const sendMessage = (e) => {
+  const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
     socket.emit("sendMessage", {

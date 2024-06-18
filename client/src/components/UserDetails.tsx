@@ -1,6 +1,18 @@
+import { UserDetailsType } from "../store/dataTypes";
 import DetailBox from "./DetailBox";
+import { CartType } from "./Products";
 
-const UserDetails = ({ itemList, userDetails, userCreateDate }) => {
+interface UserDetailsPropType {
+  itemList: CartType[];
+  userDetails: UserDetailsType | null;
+  userCreateDate: string | null;
+}
+
+const UserDetails = ({
+  itemList,
+  userDetails,
+  userCreateDate,
+}: UserDetailsPropType) => {
   return (
     <div>
       <h2 className="text-4xl">User Details</h2>
@@ -9,13 +21,15 @@ const UserDetails = ({ itemList, userDetails, userCreateDate }) => {
           <DetailBox label={"First name:"} value={userDetails.firstName} />
           <DetailBox label={"Last name:"} value={userDetails.lastName} />
           <DetailBox label={"Username:"} value={userDetails.username} />
-          <DetailBox label={"Account created:"} value={userCreateDate} />
+          {userCreateDate !== null && (
+            <DetailBox label={"Account created:"} value={userCreateDate} />
+          )}
           <DetailBox label={"User's city:"} value={userDetails.city} />
 
           {itemList && (
             <DetailBox
               label={"Number of items listed:"}
-              value={itemList.length}
+              value={itemList.length.toString()}
             />
           )}
         </div>

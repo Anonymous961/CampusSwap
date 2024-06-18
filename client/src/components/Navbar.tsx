@@ -13,23 +13,16 @@ const Navbar = () => {
           <img
             src="https://i.postimg.cc/BvXyZQcc/campus-Swaplogo.png"
             width={"100px"}
+            className="hover:animate-tada"
             onClick={() => navigate("/")}
           />
         </div>
 
         <ul className="grid grid-cols-1 text-center lg:grid-cols-4 md:grid-cols-2 items-center gap-5 ">
-          <Link to="/">
-            <li className="p-2 text-xl hover:underline">Home</li>
-          </Link>
-          <Link to="/contact">
-            <li className="p-2 text-xl hover:underline">Contact</li>
-          </Link>
-          <li className="p-2 text-xl hover:underline">About</li>
-          {User && (
-            <Link to="/chats">
-              <li className="p-2 text-xl hover:underline">Chats</li>
-            </Link>
-          )}
+          <Nav path={"/"} label={"Home"} />
+          <Nav path={"/contact"} label={"Contact"} />
+          <Nav path={"/about"} label={"About"} />
+          {User && <Nav path={"/chats"} label={"Chats"} />}
         </ul>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
@@ -49,5 +42,19 @@ const Navbar = () => {
     </div>
   );
 };
+interface NavType {
+  label: string;
+  path: string;
+}
+
+export function Nav({ label, path }: NavType) {
+  return (
+    <Link to={path}>
+      <li className="p-2 text-xl hover:scale-105 ease-in duration-200">
+        {label}
+      </li>
+    </Link>
+  );
+}
 
 export default Navbar;

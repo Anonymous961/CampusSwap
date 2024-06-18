@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-
 import { UserAtom } from "../store/atoms/user";
 import axios from "axios";
 import Chat from "./Chat";
@@ -24,10 +23,14 @@ const Chats = () => {
         }
       );
       setChatRooms(res.data.chatRooms);
-    } catch (error: any) {
-      console.log(error.response.data.mesage);
-      if (error.response.status === 405) {
-        logout();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data.message);
+        if (error.response?.status === 405) {
+          logout();
+        }
+      } else {
+        console.error("An unexpected error occurred:", error);
       }
     }
   };
@@ -62,7 +65,7 @@ const Chats = () => {
           </h2>
         </div>
       )}
-      {roomId && <Chat user={user} />}
+      {roomId && <Chat />}
     </div>
   );
 };

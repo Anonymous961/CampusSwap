@@ -8,12 +8,22 @@ export interface Item {
     sold: boolean;
     description: string;
     image: string;
-    createdAt:Date;
-    quantity:number;
-    ownerId:string;
-    city:string;
+    createdAt: Date;
+    quantity: number;
+    ownerId: string;
+    city: string;
 }
-export interface User{
-    username:string;
-    token:string;
+export interface User {
+    username: string;
+    token: string;
+}
+
+export interface UserDetailsType {
+    city: string;
+    createdAt: string;
+    firstName: string;
+    id: string;
+    lastName: string;
+    updatedAt: string;
+    username: string
 }

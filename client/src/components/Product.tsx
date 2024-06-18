@@ -2,6 +2,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { Item, User } from "../store/dataTypes";
+import { CustomButton } from "./CustomButton";
 
 export interface ProductType {
   item: Item;
@@ -21,7 +22,7 @@ export default function Product({
   const navigate = useNavigate();
   return (
     <div
-      className="flex flex-col justify-between max-w-sm hover:border-2   rounded-md"
+      className="flex flex-col justify-between max-w-sm hover:scale-105 hover:shadow-lg hover:bg-white ease-in duration-300 rounded-md cursor-pointer"
       key={item.id}
     >
       <img
@@ -30,27 +31,24 @@ export default function Product({
         onClick={() => navigate(`/item/${item.id}`)}
         alt=""
       />
-      <div className="p-2">
-        <div className="grid grid-col-1 lg:grid-cols-2 justify-between">
+      <div>
+        <div className="p-2">
           <h4 className="text-2xl my-2 ">{item.itemname}</h4>
-          <p className="text-xl my-2 text-orange-700 lg:text-right">
-            ₹{item.price}
+          <p className="text-xl my-2 text-orange-700 ">₹{item.price}</p>
+          <p className="my-2 font-medium">
+            Condition :
+            <span className={getClassForCondition(item.condition)}>
+              {item.condition}
+            </span>
+          </p>
+          <p className="font-bold">
+            {formatDistanceToNow(new Date(item.createdAt), {
+              addSuffix: true,
+            })}
           </p>
         </div>
-        <p className="my-2 font-medium">
-          Condition :
-          <span className={getClassForCondition(item.condition)}>
-            {item.condition}
-          </span>
-        </p>
-        <p className="font-bold">
-          {formatDistanceToNow(new Date(item.createdAt), {
-            addSuffix: true,
-          })}
-        </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 justify-between">
-          <button
-            className="p-4 w-full lg:w-24 bg-yellow-400 hover:bg-yellow-300 rounded-md shadow-md flex justify-center items-center"
+          <CustomButton
             onClick={() => {
               if (user) {
                 handleCart(item);
@@ -58,20 +56,18 @@ export default function Product({
                 navigate("/login");
               }
             }}
-          >
-            <AiOutlineShoppingCart className="" />
-          </button>
+            label={<AiOutlineShoppingCart size={30} />}
+            color="yellow"
+          />
           {item.sold ? (
             <button className="p-4 w-full lg:w-24 bg-gray-300 rounded-md shadow-md">
               Sold
             </button>
           ) : (
-            <button
-              className="p-4 w-full lg:w-24 bg-slate-800 text-white hover:bg-green-300 rounded-md shadow-md"
+            <CustomButton
               onClick={() => handleContact(item)}
-            >
-              Contact Owner
-            </button>
+              label={"Contact Owner"}
+            />
           )}
         </div>
       </div>
