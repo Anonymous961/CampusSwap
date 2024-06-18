@@ -6,10 +6,10 @@ import LoadingSpin from "../components/LoadingSpin";
 const Home = () => {
   return (
     <div>
-      <Herosection />
-      {/* <Suspense fallback={<LoadingSpin />}> */}
+      <Suspense fallback={<LoadingSpin />}>
+        <Herosection />
+      </Suspense>
       <Products />
-      {/* </Suspense> */}
     </div>
   );
 };

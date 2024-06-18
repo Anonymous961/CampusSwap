@@ -4,16 +4,24 @@ import { useRecoilValue } from "recoil";
 import { io } from "socket.io-client";
 import { UserAtom } from "../store/atoms/user";
 
+interface MessageType {
+  content: string;
+  roomId: string;
+  sender: string;
+  senderName: string;
+  timestamp: string;
+}
+
 const Chat = () => {
   const user = useRecoilValue(UserAtom);
   const { roomId } = useParams();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const socket = useMemo(
     () => io(import.meta.env.VITE_APP_BACKEND_URL),
     [roomId]
   );
-  const scrollableDivRef = useRef(null);
+  const scrollableDivRef = useRef<HTMLDivElement>(null);
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -23,6 +31,7 @@ const Chat = () => {
       sender: user.user.id,
       senderName: user.user.username,
     });
+    console.log("messaged in roomId ", roomId);
     setNewMessage("");
   };
   useEffect(() => {
@@ -34,21 +43,30 @@ const Chat = () => {
   }, [messages]);
   useEffect(() => {
     if (!socket) return;
+    const handleNewMessage = (message: MessageType) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    };
     socket.on("connect", () => {
       console.log("connected", socket.id);
-      const temp = roomId?.split("_");
-      const buyerId = temp[0];
-      const sellerId = temp[1];
-      socket.emit("joinRoom", { buyerId, sellerId });
+      console.log("room joined", roomId);
+      if (roomId) {
+        const temp = roomId?.split("_");
+        const buyerId = temp[0];
+        const sellerId = temp[1];
+        socket.emit("joinRoom", { buyerId, sellerId });
+      } else {
+        console.error("roomId is undefined");
+      }
     });
-    socket.on("previousMessages", (messages) => {
+    socket.on("previousMessages", (messages: MessageType[]) => {
       setMessages(messages);
     });
-    socket.on("newMessage", (message) => {
-      setMessages([...messages, message]);
-    });
+
+    socket.on("newMessage", handleNewMessage);
     return () => {
       socket.disconnect();
+      console.log("room left ", roomId);
+      setMessages([]);
     };
   }, [socket, roomId]);
   return roomId ? (

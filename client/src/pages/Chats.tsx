@@ -54,7 +54,7 @@ const Chats = () => {
         {chatRooms.length === 0 && <div>No chat room</div>}
       </div>
       {!roomId && (
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="lg:col-span-4 w-full flex flex-col justify-center items-center">
           <img
             className="max-h-96"
             src="https://i.postimg.cc/wvL5GBFZ/chatss.png"
