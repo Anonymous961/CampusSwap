@@ -4,9 +4,15 @@ const { User: UserMongo } = require("../models/userModel");
 const getUserId = require("../utils/getUserId");
 
 const getAllItems = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 8;
+  const offset = (page - 1) * limit;
   try {
-    const items = await ItemModel.findAll({ order: [["createdAt", "DESC"]] });
-    res.json(items);
+    const totalItems = await ItemModel.count();
+    const totalPages = Math.ceil(totalItems / limit)
+    const items = await ItemModel.findAll({ order: [["createdAt", "DESC"]], offset, limit });
+
+    res.json({ meta: { total: totalItems, page, pages: totalPages }, data: items });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: err.message });
@@ -105,14 +111,20 @@ const deleteItem = async (req, res) => {
 };
 
 const getUserItem = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
   try {
     const { authorization } = req.headers;
     const ownerId = getUserId(authorization);
+    const totalItems = await ItemModel.count({ where: { ownerId } });
+    const totalPages = Math.ceil(totalItems / limit)
     const itemList = await ItemModel.findAll({
       where: { ownerId },
       order: [["createdAt", "DESC"]],
+      offset, limit
     });
-    res.json({ itemList });
+    res.json({ meta: { total: totalItems, page, pages: totalPages }, data: itemList });
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ message: err.message });

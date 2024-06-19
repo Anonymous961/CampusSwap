@@ -70,7 +70,7 @@ const Chat = () => {
     };
   }, [socket, roomId]);
   return roomId ? (
-    <div className="lg:col-span-4 w-full">
+    <div className="lg:col-span-4 w-full min-h-screen">
       <h1 className="text-3xl">Chats</h1>
       <div
         className="max-h-screen overflow-y-scroll no-scollbar"

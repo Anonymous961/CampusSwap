@@ -38,7 +38,7 @@ const Chats = () => {
     fetchChats();
   }, []);
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-6 poppins-regular p-10 overflow-y-scroll no-scrollbar h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-6 poppins-regular p-10 min-h-screen">
       <div className="lg:col-span-2 ">
         <h1 className="text-3xl">Chatrooms</h1>
         {chatRooms &&

@@ -20,7 +20,10 @@ export function CartItem({
   handleDelete,
 }: CartItemType) {
   return (
-    <div className="items-center grid grid-cols-6 border-2 p-2" key={item.id}>
+    <div
+      className="items-center grid grid-col-1 lg:grid-cols-6 border-2 p-2"
+      key={item.id}
+    >
       <img
         src={`${import.meta.env.VITE_APP_BACKEND_URL}/images/${item.image}`}
         className="max-w-48 max-h-36"

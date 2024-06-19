@@ -7,7 +7,7 @@ export const CartAtom = atom({
   default: selector({
     key: "fetchcart",
     get: async ({ get }) => {
-      const user = get(UserAtom);
+      const user = await get(UserAtom);
       try {
         const res = await axios.get(
           import.meta.env.VITE_APP_BACKEND_URL + "api/user/cart",
