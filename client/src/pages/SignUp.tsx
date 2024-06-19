@@ -55,6 +55,11 @@ const SignUp = () => {
             placeholder="City"
             onChange={(e) => setCity(e.target.value)}
           />
+          <div className="text-left">
+            <p className="font-bold">
+              *NOTE: Enter full name of city, eg: mumbai or Mumbai
+            </p>
+          </div>
           {!isLoading ? (
             <SubmitButton label="Register" />
           ) : (

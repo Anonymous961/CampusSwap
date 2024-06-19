@@ -20,7 +20,6 @@ const UserItems = ({
   setItemList,
 }: UserItemsPropTypes) => {
   const user = useRecoilValue(UserAtom);
-  console.log(user.token);
   const navigate = useNavigate();
   async function handleDelete(item: CartType) {
     const newItemList = itemList.filter((i) => {
@@ -50,7 +49,7 @@ const UserItems = ({
       <div className="flex justify-between">
         <h2 className="text-4xl mb-8">User Items</h2>
         <button
-          className="p-2 max-h-14 text-white w-64 bg-slate-700 hover:bg-green-500 ease-in duration-200"
+          className="p-2 max-h-14 text-white w-64 bg-slate-700 hover:bg-green-500 hover:rounded-md ease-in duration-200"
           onClick={() => navigate("/additem")}
         >
           List Item
@@ -66,7 +65,7 @@ const UserItems = ({
                 className="flex flex-col justify-between max-w-sm rounded-md hover:border-gray-300 hover:scale-105 hover:shadow-md ease-in duration-200 relative"
                 key={item.id}
               >
-                <div className=" z-10 absolute top-2 hover:bg-slate-200 hover:scale-105 p-2 rounded-md ease-in duration-200 hover:shadow-md">
+                <div className=" z-10 absolute top-2 hover:bg-red-400 hover:scale-105 p-2 rounded-md ease-in duration-200 hover:shadow-md">
                   <FaRegTrashAlt size={30} onClick={() => handleDelete(item)} />
                 </div>
                 <img

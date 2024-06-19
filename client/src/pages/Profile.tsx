@@ -65,7 +65,7 @@ const Profile = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center p-5">
+    <section className="flex flex-col justify-center ">
       <div className="poppins-regular shadow-lg p-8">
         <UserDetails
           userCreateDate={userCreateDate}

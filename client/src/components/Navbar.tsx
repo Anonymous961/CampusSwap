@@ -2,6 +2,7 @@ import { FaCartPlus, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
+import { Avatar } from "./Avatar";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -35,7 +36,11 @@ const Navbar = () => {
         </div>
         <div className="flex justify-center lg:justify-start">
           <Link to={User ? "/profile" : "/login"}>
-            <FaUser className="text-4xl" />
+            {User ? (
+              <Avatar name={User.user.firstName.toUpperCase()} size="big" />
+            ) : (
+              <FaUser className="text-4xl" />
+            )}
           </Link>
         </div>
       </div>

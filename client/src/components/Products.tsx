@@ -120,7 +120,8 @@ const Products = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 m-2">
           {items.map(
             (item: Item) =>
-              (filter !== "mycity" || item.city === user.user.city) && (
+              (filter !== "mycity" ||
+                item.city.toLowerCase() === user.user.city.toLowerCase()) && (
                 <Product
                   key={item.id}
                   item={item}

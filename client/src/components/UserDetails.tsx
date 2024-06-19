@@ -17,7 +17,7 @@ const UserDetails = ({
     <div>
       <h2 className="text-4xl">User Details</h2>
       {userDetails && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-4 gap-5  my-5 rounded-md">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  my-5 rounded-md">
           <DetailBox label={"First name:"} value={userDetails.firstName} />
           <DetailBox label={"Last name:"} value={userDetails.lastName} />
           <DetailBox label={"Username:"} value={userDetails.username} />
