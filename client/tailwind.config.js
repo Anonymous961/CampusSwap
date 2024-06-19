@@ -14,9 +14,18 @@ export default {
           '40%, 60%, 80%': { transform: 'scale(1.1) rotate(-3deg)' },
           '100%': { transform: 'scale(1) rotate(0)' },
         },
+        slideIn: {
+          from: {
+            right: '100%',
+          },
+          to: {
+            right: '4rem', // Adjust the distance from the right edge as needed
+          },
+        },
       },
       animation: {
         tada: 'tada 1s ease-in-out infinite',
+        slideIn: 'slideIn 0.5s forwards',
       },
     },
   },

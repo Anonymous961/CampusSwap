@@ -20,6 +20,7 @@ const Profile = () => {
   });
   const [userDetails, setUserDetails] = useState<UserDetailsType | null>(null);
   const [userCreateDate, setUserDate] = useState<string | null>(null);
+  // const [deleteMessage,setDeleteMessage]=useState<string>("")
   const user = useRecoilValue(UserAtom);
 
   const getUserItems = async (page: number) => {

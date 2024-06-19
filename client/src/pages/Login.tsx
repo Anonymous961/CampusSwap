@@ -11,12 +11,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
+  // const error = "true";
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login(email, password);
   };
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen relative">
       {error && <Alert message={error} />}
       <div className="hidden lg:block md:block">
         <AuthQuote quote="Sustainable shopping at" title="Discover" />

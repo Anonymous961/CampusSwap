@@ -7,6 +7,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { UserAtom } from "../store/atoms/user";
+import { useState } from "react";
+import { InfoAlert } from "./InfoAlert";
 
 interface UserItemsPropTypes {
   itemList: CartType[];
@@ -21,6 +23,7 @@ const UserItems = ({
 }: UserItemsPropTypes) => {
   const user = useRecoilValue(UserAtom);
   const navigate = useNavigate();
+  const [info, setInfo] = useState<boolean>(false);
   async function handleDelete(item: CartType) {
     const newItemList = itemList.filter((i) => {
       return item.id !== i.id;
@@ -38,7 +41,13 @@ const UserItems = ({
           },
         }
       );
-      console.log(response.data);
+      if (response.status === 200) {
+        setInfo(true);
+        setTimeout(() => {
+          setInfo(false);
+        }, 5000);
+      }
+      console.log(response);
     } catch (err) {
       console.error(err);
     }
@@ -46,6 +55,7 @@ const UserItems = ({
 
   return (
     <div className="pb-4">
+      {info && <InfoAlert />}
       <div className="flex justify-between">
         <h2 className="text-4xl mb-8">User Items</h2>
         <button
