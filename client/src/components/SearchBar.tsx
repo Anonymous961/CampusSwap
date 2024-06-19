@@ -14,7 +14,6 @@ const SearchBar = ({ setResults }: SearchBarType) => {
     axios
       .get(import.meta.env.VITE_APP_BACKEND_URL + `api/item/allitems`)
       .then((res) => {
-        console.log(res);
         const newValue = value.toLowerCase();
         const results = res.data.filter((item: Item) => {
           return (
@@ -23,7 +22,7 @@ const SearchBar = ({ setResults }: SearchBarType) => {
             item.itemname.toLowerCase().includes(newValue)
           );
         });
-        console.log(results);
+
         setResults(results);
       });
   };

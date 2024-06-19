@@ -63,20 +63,6 @@ const Products = () => {
     const sellerId = item.ownerId;
     navigate(`/chats/${buyerId}_${sellerId}`);
   };
-  function getClassForCondition(condition: string) {
-    switch (condition.toLowerCase()) {
-      case "best":
-        return "text-blue-500";
-      case "good":
-        return "text-green-500";
-      case "bad":
-        return "text-yellow-500";
-      case "worst":
-        return "text-red-500";
-      default:
-        return "";
-    }
-  }
   const handleCart = (item: Item) => {
     const existingItemIndex = cart.findIndex(
       (cartItem: Item) => cartItem.id === item.id
@@ -84,7 +70,6 @@ const Products = () => {
 
     if (existingItemIndex !== -1) {
       setCart((prevCart: CartType[]) => {
-        console.log("prevcart", prevCart);
         const updatedCart = prevCart.map((cartItem, index) => {
           if (index === existingItemIndex) {
             return { ...cartItem, quantity: cartItem.quantity + 1 };
@@ -139,7 +124,6 @@ const Products = () => {
                 <Product
                   key={item.id}
                   item={item}
-                  getClassForCondition={getClassForCondition}
                   handleCart={handleCart}
                   handleContact={handleContact}
                   user={user}

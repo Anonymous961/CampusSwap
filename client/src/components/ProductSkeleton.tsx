@@ -16,12 +16,12 @@ export function ProductSkeleton() {
         <div className="p-2">
           <div className="h-7 bg-gray-200  w-48 mb-6"></div>
           <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
-          <p className="my-2 font-medium">
+          <div className="my-2 font-medium">
             <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
-          </p>
-          <p className="font-bold">
+          </div>
+          <div className="font-bold">
             <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4"></div>
-          </p>
+          </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-2">
           <div className="h-10 bg-gray-200 rounded-md w-48 mb-4"></div>

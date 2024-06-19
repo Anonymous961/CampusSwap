@@ -31,7 +31,6 @@ const Chat = () => {
       sender: user.user.id,
       senderName: user.user.username,
     });
-    console.log("messaged in roomId ", roomId);
     setNewMessage("");
   };
   useEffect(() => {
@@ -47,8 +46,6 @@ const Chat = () => {
       setMessages((prevMessages) => [...prevMessages, message]);
     };
     socket.on("connect", () => {
-      console.log("connected", socket.id);
-      console.log("room joined", roomId);
       if (roomId) {
         const temp = roomId?.split("_");
         const buyerId = temp[0];
@@ -65,7 +62,7 @@ const Chat = () => {
     socket.on("newMessage", handleNewMessage);
     return () => {
       socket.disconnect();
-      console.log("room left ", roomId);
+
       setMessages([]);
     };
   }, [socket, roomId]);

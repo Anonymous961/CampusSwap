@@ -103,6 +103,7 @@ const deleteItem = async (req, res) => {
         id: id,
       },
     });
+    console.log(response)
     res.json("Item deleted successfully!!");
   } catch (err) {
     console.error(err.message);

@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { Item, User } from "../store/dataTypes";
 import { CustomButton } from "./CustomButton";
+import { getClassForCondition } from "../utils/ClassHelper";
 
 export interface ProductType {
   item: Item;
-  getClassForCondition: (text: string) => string;
   handleCart: (item: Item) => void;
   handleContact: (item: Item) => void;
   user: User;
@@ -14,7 +14,6 @@ export interface ProductType {
 
 export default function Product({
   item,
-  getClassForCondition,
   handleCart,
   handleContact,
   user,
@@ -35,11 +34,12 @@ export default function Product({
         <div className="p-2">
           <h4 className="text-2xl my-2 ">{item.itemname}</h4>
           <p className="text-xl my-2 text-orange-700 ">₹{item.price}</p>
-          <p className="my-2 font-medium">
-            Condition :
-            <span className={getClassForCondition(item.condition)}>
-              {item.condition}
-            </span>
+          <p
+            className={`my-2 font-medium ${getClassForCondition(
+              item.condition
+            )}`}
+          >
+            Condition: {item.condition}
           </p>
           <p className="font-bold">
             {formatDistanceToNow(new Date(item.createdAt), {

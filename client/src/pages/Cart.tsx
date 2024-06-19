@@ -58,7 +58,7 @@ const Cart = () => {
   }, [cart]);
   return (
     <Suspense fallback={<LoadingSpin />}>
-      <section className="flex flex-col justify-center p-5">
+      <section className="flex flex-col justify-center p-5 min-h-screen">
         <div className="poppins-regular border-2 shadow-lg p-8">
           <h1 className="text-3xl">Your Cart!</h1>
           {cart.map((item: Item) => {

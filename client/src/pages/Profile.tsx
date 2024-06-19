@@ -6,13 +6,13 @@ import { UserAtom } from "../store/atoms/user";
 import UserDetails from "../components/UserDetails";
 import UserItems from "../components/UserItems";
 import { UserDetailsType } from "../store/dataTypes";
-import { PageMetaTypes } from "../components/Products";
+import { CartType, PageMetaTypes } from "../components/Products";
 import { Pagination } from "../components/Pagination";
 
 const Profile = () => {
   const { logout } = useLogout();
   const [isLoading, setIsLoading] = useState(false);
-  const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState<CartType[]>([]);
   const [pageMeta, setPageMeta] = useState<PageMetaTypes>({
     total: 0,
     page: 1,
@@ -55,7 +55,6 @@ const Profile = () => {
     getUserItems(pageMeta.page);
     if (user != null) {
       setUserDetails(user.user);
-      console.log(user.user);
     }
     const date = new Date(user.user.createdAt).toDateString();
     setUserDate(date);
@@ -68,14 +67,17 @@ const Profile = () => {
   return (
     <section className="flex flex-col justify-center p-5">
       <div className="poppins-regular shadow-lg p-8">
-        {/* <h1 className="text-4xl">Profile</h1> */}
         <UserDetails
           userCreateDate={userCreateDate}
           userDetails={userDetails}
           itemList={itemList}
         />
-        <UserItems itemList={itemList} isLoading={isLoading} />
-        <div className="flex justify-center">
+        <UserItems
+          itemList={itemList}
+          isLoading={isLoading}
+          setItemList={setItemList}
+        />
+        <div className="flex justify-center m-4">
           <Pagination
             totalPages={pageMeta.pages}
             currentPage={pageMeta.page}
