@@ -17,6 +17,7 @@ import Cart from "./pages/Cart";
 import Chats from "./pages/Chats";
 import Contact from "./pages/Contact";
 import ItemPage from "./pages/ItemPage";
+import Admin from "./pages/Admin";
 
 function App() {
   const user = useRecoilValue(UserAtom);
@@ -38,26 +39,15 @@ function App() {
           path="/addItem"
           element={user ? <AddItem /> : <Navigate to="/" />}
         />
-        <Route
-          path="/cart"
-          element={user ? <Cart /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/chats"
-          element={user ? <Chats /> : <Navigate to="/" />}
-        />
+        <Route path="/cart" element={user ? <Cart /> : <Navigate to="/" />} />
+        <Route path="/chats" element={user ? <Chats /> : <Navigate to="/" />} />
         <Route
           path="/chats/:roomId"
           element={user ? <Chats /> : <Navigate to="/" />}
         />
-        <Route
-          path="/contact"
-          element={<Contact/>}
-        />
-        <Route
-          path="/item/:id"
-          element={<ItemPage/>}
-        />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/item/:id" element={<ItemPage />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </Router>
